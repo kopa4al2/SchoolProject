@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+
+<body>
+<th:block th:replace="fragments/nav"></th:block>
+<div class="main-container">
+    <div class="container">
+        <div class="single-product-container">
+            <!--/*@thymesVar id="product" type="justme.projectAwesome.entities.Product"*/-->
+            <th:block th:text="'Title: ' + ${product.getTitle()}"></th:block>
+            <th:block th:text="'Posted by: '"></th:block>
+            <a th:href="@{|/users/userid=${product.getOwner().getId()}|}"
+               th:text="${product.getOwner().getUsername()}">${product.getOwner().getUsername()}</a>
+            <th:block th:text="'Price: ' + ${product.getPrice()}"></th:block>
+            <th:block th:text="'Created on: ' + ${product.getUploadedOn()}"></th:block>
+            <th:block th:text="'Categories:' " th:each="category : ${product.getCategories()}">
+                <th:block th:text="${category.getCategoryName()}"></th:block>
+            </th:block>
+            <form th:method="POST" th:action="@{|/sales/product/${product.getId()}/vote|}">
+                <textarea th:name="content"></textarea>
+                <input type="submit" th:value="upvote" th:name="upvote">
+                <input type="submit" th:value="downvote" th:name="downvote">
+            </form>
+            <!--TODO:Like and dislike-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

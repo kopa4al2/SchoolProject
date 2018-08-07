@@ -1,0 +1,8 @@
+
+.bubble {
+    display:none;
+    width:20%;
+    margin:auto;
+    height:300px;
+    border-radius:10px;
+}

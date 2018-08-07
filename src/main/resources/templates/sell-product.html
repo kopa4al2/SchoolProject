@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+
+<body>
+<th:block th:replace="fragments/nav"></th:block>
+<div class="main-container">
+    <div class="sales-container">
+        <div class="sales-nav">
+            <th:block th:replace="fragments/sales-nav"></th:block>
+        </div>
+        <div class="products-container sell-product-container">
+            <form th:action="@{/sales/enlist-product}" th:method="POST">
+                <input type="text" th:name="title" placeholder="title">
+                <input type="text" th:name="price" placeholder="price">
+                <input type="submit" th:value="Submit">
+                <!--/*@thymesVar id="categories" type="justme.projectAwesome.entities.Category[]"*/-->
+                <th:block th:each="category : ${categories}">
+                    <input id="${category.getId(}" type="checkbox" th:name="category"
+                           th:value="${category.getCategoryName()}">
+                    <label for="${category.getId(}}" th:text="${category.getCategoryName()}"></label>
+                </th:block>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<th:block>
+    <div class="navbar-container mt-1 px-2 ">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">Shopify</a>
+            <button class="navbar-toggler mr-auto ml-2" type="button"
+                    data-toggle="collapse"
+                    data-target="#navigation"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a class="nav-link" href="#" id="login" data-toggle="modal" data-target="#modal-login">Login</a>
+                    </li>
+
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a class="nav-link" href="#" id="register" data-toggle="modal" data-target="#modal-register">Register</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="browse-sales" href="/sales">Browse sales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="browse-reviews" href="/reviews">Browse reviews</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('MODERATOR')" class="nav-item">
+                        <a class="nav-link" href="/all-users">All users</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('USER')" class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasAuthority('USER')" class="notification">
+                <!--TODO: IF has notification -> fas fa-bell ELSe far fa-bell-->
+                <i class="far fa-bell"></i>
+                <!--<i class="fas fa-bell"></i>-->
+            </div>
+            <div sec:authorize="hasAuthority('USER')" class="dropdown">
+                <!--th:text="${#authentication.getPrincipal().getUsername()}"-->
+                    <button
+                            class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        <img src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+                             alt="user-pic" class="user-img user-img-small">
+                        <th:block th:text="${#authentication.getPrincipal().getUsername()}">
+
+                        </th:block>
+                    </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <img src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+                         alt="user-pic" class="user-img user-img-medium">
+                    <a class="dropdown-item" th:href="@{|/users/userid=${#authentication.getPrincipal().getId()}|}">
+                        About me</a>
+                    <a class="dropdown-item" href="#">My Sales</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+</th:block>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+
+<body>
+<th:block th:replace="fragments/nav
+"></th:block>
+<div class="main-container">
+    <th:block th:replace="fragments/user-info"></th:block>
+    <th:block th:replace="fragments/user-nav"></th:block>
+    <div class="user-render-container">
+
+    </div>
+    <!--/*@thymesVar id="user" type="justme.projectAwesome.entities.User"*/-->
+    <th:block th:text="${user.getUsername()}"></th:block>
+    <form th:action="@{|/users/${user.getId()}/send-message|}" th:method="POST">
+        <textarea name="content" id="message-content" cols="30" rows="10"></textarea>
+        <input type="submit" value="Send message" th:name="send-message">
+    </form>
+    <form th:action="@{|/users/${user.getId()}/send-friend-request|}" th:method="POST">
+        <input type="submit" value="Send friend request" th:name="send-friend">
+    </form>
+    <form th:action="@{|/users/${user.getId()}/vote|}" th:method="POST">
+        <textarea th:name="content" id="vote-message" cols="30" rows="10"></textarea>
+        <input type="submit" th:name="upvote" value="Positive">
+        <input type="submit" th:name="downvote" value="Negative">
+    </form>
+</div>
+
+</body>
+</html>

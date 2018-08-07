@@ -1,0 +1,73 @@
+@import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+/*@import url('/font-awesome-4.6.3/css/font-awesome.min.css');*/
+.navbar-container{
+    color:white;
+    opacity:0.7;
+    width:95%;
+    border-radius:25px;
+}
+nav a{
+    font-weight:bold;
+    font-size:1.4rem;
+}
+.navbar-brand{
+    font-weight:bolder;
+}
+.navbar-toggler
+{
+    background:#5a6268 !important;
+}
+.navbar-toggler:hover{
+    transition:all 1s linear;
+    opacity:0.9;
+}
+.dropdown{
+    position:fixed;
+    left:calc(100vw - 161px);
+    top:15px;
+    width:50px;
+}
+.dropdown-toggle{
+    height:40px;
+    min-width: 130px;
+    max-width: 150px;
+    overflow: hidden;
+}
+.dropdown-toggle:hover{
+}
+.dropdown-menu{
+    background-color: #CCC;
+}
+.dropdown-item:hover{
+    background-color: white;
+}
+.user-img{
+}
+.user-img-small{
+    position:relative;
+    left:-11px;
+    top:-2px;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+}
+.user-img-medium{
+    width:149px;
+    margin-left:5px;
+    height:120px;
+    margin-bottom:5px;
+}
+.notification{
+    position:fixed;
+    left:calc(100vw - 185px);
+    top:25px;
+    width:20px;
+}
+.notification i{
+    font-size:1.4rem;
+    color:yellow;
+}
+.notification i:hover{
+    opacity:0.8;
+    cursor:pointer;
+}

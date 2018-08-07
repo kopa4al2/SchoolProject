@@ -1,0 +1,26 @@
+body{
+    background-color: #4DB448;
+}
+
+a{
+    text-decoration: none;
+}
+.main-container{
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 100px);
+    min-width:95%;
+    max-width: 98%;
+    margin:auto;
+    padding:15px;
+    border-radius:20px;
+    border:2px solid #CCC;
+    box-shadow:5px 5px 4px green;
+    background-color:white;
+    color: #141823;
+    font-size:1.4rem;
+    margin-bottom:15px;
+}
+.main-container a{
+    color:rgba(20,24,35,1);
+}

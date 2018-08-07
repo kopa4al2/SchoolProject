@@ -1,0 +1,7 @@
+<th:block th:fragment="add-category" xmlns:th="http://www.w3.org/1999/xhtml">
+    <form th:action="@{/sales/add-category}" th:method="POST">
+        <input type="text" th:name="@{categoryName}">
+        <button>Submit category</button>
+        <!--TODO: Filter 'are you sure'-->
+    </form>
+</th:block>
