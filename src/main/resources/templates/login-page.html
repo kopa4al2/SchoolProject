@@ -10,7 +10,11 @@
 <th:block th:replace="fragments/nav
 "></th:block>
 <div class="main-container">
-    <th:block th:replace="fragments/login"></th:block>
+    <th:block th:replace="fragments/authentication-modals"></th:block>
+    <h5 class="login-header">
+        Login
+    </h5>
+    <th:block th:replace="fragments/login-form"></th:block>
 </div>
 
 </body>

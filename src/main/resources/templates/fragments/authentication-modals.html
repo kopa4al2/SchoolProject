@@ -1,4 +1,3 @@
-
 <div class="modal" tabindex="-1" role="dialog" id="modal-register">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,11 +8,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <th:block th:replace="fragments/register">
+                <th:block th:replace="fragments/register-form">
                 </th:block>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -28,10 +24,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                    <th:block th:replace="fragments/login"></th:block>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <th:block th:replace="fragments/login-form"></th:block>
             </div>
         </div>
     </div>

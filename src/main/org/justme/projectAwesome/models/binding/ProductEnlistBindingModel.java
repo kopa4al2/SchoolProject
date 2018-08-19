@@ -13,6 +13,8 @@ public class ProductEnlistBindingModel {
 
     private double price;
 
+    private String description;
+
     private Date uploadedOn;
 
     private User owner;
@@ -63,5 +65,13 @@ public class ProductEnlistBindingModel {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

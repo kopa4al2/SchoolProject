@@ -11,7 +11,6 @@ import java.util.*;
 @Table(name = "users")
 public class User implements UserDetails {
 
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -26,6 +25,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @Column
+    private String email;
 
     @Column
     private String profilePictureUrl;
@@ -72,24 +74,8 @@ public class User implements UserDetails {
     @ManyToMany
     private List<Comment> comments;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Vote> votes;
-
-
     @ManyToMany
     private List<Notification> notifications;
-
-    @Column
-    private boolean isAccountNonExpired;
-
-    @Column
-    private boolean isAccountNonLocked;
-
-    @Column
-    private boolean isCredentialsNonExpired;
-
-    @Column
-    private boolean isEnabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -121,39 +107,27 @@ public class User implements UserDetails {
     }
 
     @Override
+    @Transient
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
-    }
-
     @Override
+    @Transient
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
-    }
-
     @Override
+    @Transient
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        isCredentialsNonExpired = credentialsNonExpired;
-    }
-
     @Override
+    @Transient
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
     }
 
     public String getId() {
@@ -169,6 +143,12 @@ public class User implements UserDetails {
         if (this.authorities == null)
             this.authorities = new HashSet<>();
         this.authorities.add(authority);
+    }
+
+    public void removeAuthority(UserRole authority) {
+        if(this.authorities == null)
+            return;
+        this.authorities.remove(authority);
     }
 
     public String getProfilePictureUrl() {
@@ -225,14 +205,6 @@ public class User implements UserDetails {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public List<Vote> getVotes() {
-        return this.votes;
-    }
-
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
     }
 
     public Double getBalance() {
@@ -297,5 +269,26 @@ public class User implements UserDetails {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isAdmin() {
+        return this.authorities.contains(new UserRole("ADMIN"));
+    }
+
+    public boolean isModerator() {
+        return this.authorities.contains(new UserRole("MODERATOR"));
+    }
+
+    public boolean isUser() {
+        return !this.authorities.contains(new UserRole("MODERATOR")) &&
+               !this.isAdmin();
     }
 }

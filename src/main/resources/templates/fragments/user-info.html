@@ -2,21 +2,19 @@
     <h3 th:text="${user.getUsername()}"></h3>
     <div class="section-container">
         <section id="img-section">
-            <img th:src="@{http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png}"
-                 alt="profile-pic"/>
+            <!--<img th:src="@{http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png}"-->
+                 <!--alt="profile-pic"/>-->
+            <img th:src="@{|${user.getProfilePictureUrl()}|}"
+            alt="profile-pic"/>
         </section>
         <section id="info-section">
-            <span class="section-field">
-                First Name:
-                <span class="db-loaded-info" th:text="${user.getFirstName()}"></span>
-            </span>
-            <span class="section-field">Surname: <span class="db-loaded-info" th:text="${user.getSurName()}"></span></span>
-            <span class="section-field">Last name: <span class="db-loaded-info" th:text="${user.getLastName()}"></span></span>
-            <span class="section-field">Age: <span class="db-loaded-info" th:text="${user.getAge()}"></span></span>
-            <span class="section-field">Phone Number: <span class="db-loaded-info" th:text="${user.getPhoneNumber()}"></span></span>
-            <span class="section-field">City: <span class="db-loaded-info" th:text="${user.getCity()}"></span></span>
-            <span class="section-field">Country: <span class="db-loaded-info" th:text="${user.getCountry()}"></span></span>
-            <!--TODO: country flag-->
+            <span class="section-field">First Name:<span class="db-loaded-info" th:text="${user.getFirstName()}"></span></span>
+            <span class="section-field px-1">Surname: <span class="db-loaded-info" th:text="${user.getSurName()}"></span></span>
+            <span class="section-field px-1">Last name: <span class="db-loaded-info" th:text="${user.getLastName()}"></span></span>
+            <span class="section-field px-1">Age: <span class="db-loaded-info" th:text="${user.getAge()}"></span></span>
+            <span class="section-field px-1">Phone Number: <span class="db-loaded-info" th:text="${user.getPhoneNumber()}"></span></span>
+            <span class="section-field px-1">City: <span class="db-loaded-info" th:text="${user.getCity()}"></span></span>
+            <span class="section-field px-1">Country: <span class="db-loaded-info" th:text="${user.getCountry()}"></span></span>
         </section>
     </div>
 </div>

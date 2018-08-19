@@ -25,13 +25,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" id="browse-sales" href="/sales">Browse sales</a>
+                        <a class="nav-link" id="browse-sales" href="/sales">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " id="browse-reviews" href="/reviews">Browse reviews</a>
+                        <a class="nav-link " id="browse-reviews" href="/reviews">Reviews</a>
                     </li>
-                    <li sec:authorize="hasAuthority('MODERATOR')" class="nav-item">
-                        <a class="nav-link" href="/all-users">All users</a>
+                    <li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
+                        <a class="nav-link" href="/admin">Admin panel</a>
                     </li>
                     <li sec:authorize="hasAuthority('USER')" class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
@@ -43,7 +43,7 @@
                 <i class="far fa-bell"></i>
                 <!--<i class="fas fa-bell"></i>-->
             </div>
-            <div sec:authorize="hasAuthority('USER')" class="dropdown">
+            <div id="user-dropdown" sec:authorize="hasAuthority('USER')" class="dropdown">
                 <!--th:text="${#authentication.getPrincipal().getUsername()}"-->
                     <button
                             class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"

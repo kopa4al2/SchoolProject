@@ -2,6 +2,8 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="products" type="justme.projectAwesome.entities.Product[]"*/-->
+<!--/*@thymesVar id="product" type="justme.projectAwesome.entities.Product"*/-->
 <head>
     <th:block th:replace="fragments/head"></th:block>
 </head>
@@ -9,20 +11,33 @@
 <body>
 <th:block th:replace="fragments/nav"></th:block>
 <div class="main-container">
+    <th:block th:replace="fragments/authentication-modals"></th:block>
+
+    <!--PAGINATION BAR-->
+    <section th:with="pages=${products}" class="pagination-section">
+        <th:block th:replace="fragments/pagination-bar"></th:block>
+    </section>
+
     <div class="sales-container">
-        <div class="sales-nav">
+        <section class="sales-nav">
             <th:block th:replace="fragments/sales-nav"></th:block>
-        </div>
-        <div class="add-category-container" style="display:none">
-            <th:block th:replace="fragments/add-category"></th:block>
-        </div>
-        <div class="products-container">
-            <!--/*@thymesVar id="products" type="justme.projectAwesome.entities.Product[]"*/-->
-            <!--/*@thymesVar id="product" type="justme.projectAwesome.entities.Product"*/-->
-            <th:block th:each="product : ${products}">
-                <a th:href="@{|/sales/product/id=${product.getId()}|}" th:text="${product.getTitle()}"></a>
-            </th:block>
-        </div>
+        </section>
+        <section class="sales-render-section">
+            <div class="products-container">
+                <th:block th:each="product : ${products.getContent()}">
+                    <a class="single-product-link" th:href="@{|/sales/product/id=${product.getId()}|}">
+                        <section class="product-title">
+                            <th:block th:text="${product.getTitle()}"></th:block>
+                        </section>
+                        <section class="product-info">
+                            <span>Uploaded on: </span>
+                            <th:block
+                                    th:text="${#dates.format(product.getUploadedOn(), 'dd-MM-yyyy HH:mm')}"></th:block>
+                        </section>
+                    </a>
+                </th:block>
+            </div>
+        </section>
     </div>
 </div>
 </body>

@@ -1,0 +1,10 @@
+<th:block th:fragment="add-category" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!--<form th:action="@{/sales/add-category}" th:method="POST">-->
+    <form onsubmit="return confirmSubmit(this);" th:method="POST">
+        <div class="form-group">
+            <label for="category_name" class="form-control-label">Category name:</label>
+            <input id="category_name" class="form-control" type="text" th:name="@{categoryName}">
+        </div>
+        <button class="btn btn-primary">Submit category</button>
+    </form>
+</th:block>

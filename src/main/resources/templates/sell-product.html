@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="categories" type="justme.projectAwesome.entities.Category[]"*/-->
 <head>
     <th:block th:replace="fragments/head"></th:block>
 </head>
@@ -10,20 +11,56 @@
 <th:block th:replace="fragments/nav"></th:block>
 <div class="main-container">
     <div class="sales-container">
-        <div class="sales-nav">
+        <section class="sales-nav">
             <th:block th:replace="fragments/sales-nav"></th:block>
-        </div>
-        <div class="products-container sell-product-container">
-            <form th:action="@{/sales/enlist-product}" th:method="POST">
-                <input type="text" th:name="title" placeholder="title">
-                <input type="text" th:name="price" placeholder="price">
-                <input type="submit" th:value="Submit">
-                <!--/*@thymesVar id="categories" type="justme.projectAwesome.entities.Category[]"*/-->
-                <th:block th:each="category : ${categories}">
-                    <input id="${category.getId(}" type="checkbox" th:name="category"
-                           th:value="${category.getCategoryName()}">
-                    <label for="${category.getId(}}" th:text="${category.getCategoryName()}"></label>
-                </th:block>
+        </section>
+        <div class="sales-render-section">
+            <form class="sell-product-form" th:action="@{/sales/enlist-product}" th:method="POST">
+                <section class="input-section">
+                    <h5 class="section-title"><strong>Insert product info</strong></h5>
+                    <div class="form-group">
+                        <label for="sell-item-title">Item Title:</label>
+                        <input id="sell-item-title" class="form-control" type="text" th:name="title"
+                               placeholder="Title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sell-item-price">Item Price:</label>
+                        <input id="sell-item-price" class="form-control" type="number" step="any" th:name="price"
+                               placeholder="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sell-item-description">Item Description:</label>
+                        <textarea id="sell-item-description" class="form-control" rows="5" th:name="description"
+                                  placeholder="Description"></textarea>
+                    </div>
+                </section>
+                <section class="checkbox-section">
+                    <h5 class="section-title"><strong>Select category</strong></h5>
+                    <div class="form-check">
+                        <th:block th:each="category : ${categories}">
+                            <div class="single-category">
+                                <input class="form-check-input"
+                                       id="${category.getId(}"
+                                       type="checkbox"
+                                       th:name="category"
+                                       th:value="${category.getCategoryName()}">
+                                <label class="form-check-label" for="${category.getId(}}"
+                                       th:text="${category.getCategoryName()}"></label>
+                            </div>
+                        </th:block>
+                    </div>
+                </section>
+                <section class="upload-images">
+                    <h5 class="section-title"><strong>Upload images</strong></h5>
+                    <div class="form-control-file">
+                        <label for="upload-images" class="upload-image-btn">Upload</label>
+                        <input class="form-control-file" type="file" name="file" id="upload-images"
+                               multiple>
+                    </div>
+                    <div class="preview-images"></div>
+
+                </section>
+                <input id="submit-product-btn" class="btn btn-primary" type="submit" th:value="Submit">
             </form>
         </div>
     </div>

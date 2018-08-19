@@ -28,7 +28,7 @@ public class Review {
     private User writer;
 
     @ManyToMany
-    private List<Vote> votes;
+    private List<Comment> comments;
 
     public Review() {
     }
@@ -65,11 +65,11 @@ public class Review {
         this.title = title;
     }
 
-    public List<Vote> getVotes() {
-        return this.votes;
+    public List<Comment> getComments() {
+        return this.comments;
     }
 
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

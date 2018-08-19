@@ -1,0 +1,19 @@
+/*991.98 -md*/
+@media only screen and (max-width: 719.98px) {
+    #user-dropdown{
+        margin-right:auto;
+    }
+    .list-categories{
+        margin-top:20px;
+    }
+    .sales-container{
+        flex-direction: column;
+    }
+
+    .add-category-container{
+        flex-direction: column;
+    }
+    .sell-product-form{
+        flex-direction: column;
+    }
+}

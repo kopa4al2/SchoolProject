@@ -1,0 +1,19 @@
+<form class="form-authentication" th:action="@{/register}" th:method="POST">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" class="form-control" id="username" required/>
+        <small class="form-text text-muted">Username must be no longer than 10 symbols</small>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" name="password" class="form-control" id="password" required/>
+        <small class="form-text text-muted">Password must be atleast 6 symbols</small>
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required/>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form>

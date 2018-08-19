@@ -25,10 +25,6 @@ public class Comment {
     @ManyToOne
     private User writer;
 
-    @ManyToMany
-    private List<Vote> votes;
-
-
     public Comment() {
     }
 
@@ -56,11 +52,4 @@ public class Comment {
         this.id = id;
     }
 
-    public List<Vote> getVotes() {
-        return this.votes;
-    }
-
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
-    }
 }

@@ -21,6 +21,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .exceptionHandling().accessDeniedPage("/errors/access-denied")
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("username")

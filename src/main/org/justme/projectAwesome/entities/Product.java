@@ -1,11 +1,12 @@
 package justme.projectAwesome.entities;
 
+import justme.projectAwesome.entities.enums.VoteType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "products")
@@ -18,6 +19,7 @@ public class Product {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
     private String id;
 
     @ManyToOne
@@ -26,15 +28,17 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
+    @Column
+    private String description;
+
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false, updatable = false)
     private Date uploadedOn;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Vote> votes;
-
+    @ManyToMany
+    private List<Comment> comments;
 
     @ElementCollection
     @CollectionTable(name="img_urls", joinColumns=@JoinColumn(name="product_id"))
@@ -95,6 +99,7 @@ public class Product {
     public void setImgsUrl(Set<String> imgsUrl) {
         this.imgsUrl = imgsUrl;
     }
+
     public Set<Category> getCategories() {
         return this.categories;
     }
@@ -103,12 +108,20 @@ public class Product {
         this.categories = categories;
     }
 
-    public List<Vote> getVotes() {
-        return this.votes;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
 

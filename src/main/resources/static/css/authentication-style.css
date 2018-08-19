@@ -1,0 +1,27 @@
+.modal-header {
+    width: 95%;
+    margin: auto;
+    border-bottom: 1px solid teal;
+}
+
+.modal-dialog {
+    box-shadow: 2px 2px 3px teal;
+}
+
+.form-authentication {
+    width: 80%;
+    margin: auto;
+    color:teal;
+    font-weight: bold;
+}
+
+.form-authentication button{
+    width: 200px;
+}
+.login-header {
+    font-size:1.3rem;
+    text-align: center;
+    padding:10px 0 20px;
+    border-bottom: 1px solid teal;
+}
+
