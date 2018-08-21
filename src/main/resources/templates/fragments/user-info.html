@@ -2,10 +2,14 @@
     <h3 th:text="${user.getUsername()}"></h3>
     <div class="section-container">
         <section id="img-section">
-            <!--<img th:src="@{http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png}"-->
-                 <!--alt="profile-pic"/>-->
-            <img th:src="@{|${user.getProfilePictureUrl()}|}"
+            <img class="user-img-lg" th:src="@{|${user.getProfilePictureUrl()}|}"
             alt="profile-pic"/>
+            <div class="pic-hover">
+                <form method="post" th:action="@{|/users/edit/userId=${user.getId()}|}">
+                    <button onclick="$('#edit-profile-pic').trigger('click'); return true;" class="btn-primary">Change</button>
+                <input id="edit-profile-pic" type="file" name="profile-pic" hidden>
+                </form>
+            </div>
         </section>
         <section id="info-section">
             <span class="section-field">First Name:<span class="db-loaded-info" th:text="${user.getFirstName()}"></span></span>

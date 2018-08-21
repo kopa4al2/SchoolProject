@@ -1,0 +1,19 @@
+<th:block>
+    <th:block th:each="product : ${products.getContent()}">
+    <a class="single-product-link" th:href="@{|/sales/product/id=${product.getId()}|}">
+        <section class="product-title">
+            <span class="product-title-span" th:text="${product.getTitle()}"></span>
+        </section>
+        <section class="product-info">
+            <span>Uploaded on: </span>
+            <th:block
+                    th:text="${#dates.format(product.getUploadedOn(), 'dd-MM-yyyy HH:mm')}"></th:block>
+        </section>
+    </a>
+    </th:block>
+
+    <!--PAGINATION BAR-->
+    <section th:with="pages=${products}, searchEntity='products' " class="pagination-section float-right">
+        <th:block th:replace="fragments/pagination-bar"></th:block>
+    </section>
+</th:block>

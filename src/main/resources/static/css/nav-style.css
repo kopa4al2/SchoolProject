@@ -1,5 +1,3 @@
-@import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
-/*https://uigradients.com/#Quepal*/
 .navbar-container{
     width:95%;
 }
@@ -20,7 +18,7 @@
     transition:all 1s linear;
     opacity:0.9;
 }
-.dropdown{
+#user-dropdown{
     position:absolute;
     left:calc(100vw - 180px);
     top:15px;

@@ -20,6 +20,7 @@ public class ProductEnlistBindingModel {
     private User owner;
 
     private Set<Category> categories;
+    private Set<String> imgsUrl;
 
     public ProductEnlistBindingModel() {
         this.categories = new HashSet<>();
@@ -73,5 +74,13 @@ public class ProductEnlistBindingModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setImgsUrl(Set<String> imgsUrl) {
+        this.imgsUrl = imgsUrl;
+    }
+
+    public Set<String> getImgsUrl() {
+        return imgsUrl;
     }
 }

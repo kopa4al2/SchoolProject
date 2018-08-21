@@ -2,10 +2,11 @@ package justme.projectAwesome.controllers;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
+
 public abstract class BaseController {
 
     protected ModelAndView view(String view) {
-
         return new ModelAndView(view);
     }
 
@@ -18,5 +19,7 @@ public abstract class BaseController {
         return new ModelAndView("redirect:" + redirectValue);
     }
 
-
+    protected String getLoggedInUsername() {
+        return getContext().getAuthentication().getName();
+    }
 }

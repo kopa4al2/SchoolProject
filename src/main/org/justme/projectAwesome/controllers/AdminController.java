@@ -36,9 +36,9 @@ public class AdminController extends BaseController {
     }
 
     @PostMapping(value = "/users/userid={id}")
-    public ModelAndView deleteUser(@PathVariable String id,
-                                   @RequestParam(required = false) String promote,
-                                   @RequestParam(required = false) String demote) {
+    public ModelAndView changeUserStatus(@PathVariable String id,
+                                         @RequestParam(required = false) String promote,
+                                         @RequestParam(required = false) String demote) {
         checkIfUserIsPresent(id);
         if (promote != null)
             this.userService.promote(id);

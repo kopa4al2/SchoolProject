@@ -1,0 +1,18 @@
+<div th:fragment="comment-form-modal(${product})" class="modal" tabindex="-1" role="dialog" id="modal-comment-box">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:method="POST" th:action="@{|/sales/product/comment/${product.getId()}|}">
+                    <textarea th:name="content"></textarea>
+                    <input type="submit" class="btn btn-outline-success w-100 mt-3" th:value="Comment" th:name="comment-product">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

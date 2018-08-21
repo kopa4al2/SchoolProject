@@ -6,6 +6,7 @@
 <!--/*@thymesVar id="product" type="justme.projectAwesome.entities.Product"*/-->
 <head>
     <th:block th:replace="fragments/head"></th:block>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -13,29 +14,18 @@
 <div class="main-container">
     <th:block th:replace="fragments/authentication-modals"></th:block>
 
-    <!--PAGINATION BAR-->
-    <section th:with="pages=${products}" class="pagination-section">
-        <th:block th:replace="fragments/pagination-bar"></th:block>
+    <section class="search-section">
+    <input onkeyup="filterProducts()" id="search-products-input" class="form-control mr-sm-2" type="search" placeholder="Filter by title" aria-label="Search">
+    <button id="filter" class="btn btn-primary float-left" data-toggle="modal"
+            data-target="#search-modal">Advanced Search</button>
     </section>
-
     <div class="sales-container">
         <section class="sales-nav">
             <th:block th:replace="fragments/sales-nav"></th:block>
         </section>
         <section class="sales-render-section">
-            <div class="products-container">
-                <th:block th:each="product : ${products.getContent()}">
-                    <a class="single-product-link" th:href="@{|/sales/product/id=${product.getId()}|}">
-                        <section class="product-title">
-                            <th:block th:text="${product.getTitle()}"></th:block>
-                        </section>
-                        <section class="product-info">
-                            <span>Uploaded on: </span>
-                            <th:block
-                                    th:text="${#dates.format(product.getUploadedOn(), 'dd-MM-yyyy HH:mm')}"></th:block>
-                        </section>
-                    </a>
-                </th:block>
+            <div id="product-container" class="products-container">
+                <th:block th:fragment="products-container-fragment" th:replace="fragments/products-container-fragment"></th:block>
             </div>
         </section>
     </div>

@@ -3,12 +3,12 @@ package justme.projectAwesome.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "comments")
 public class Comment {
-
+    private static final int CONTENT_MAX_LENGTH = 1000;
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -19,8 +19,11 @@ public class Comment {
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = CONTENT_MAX_LENGTH)
     private String content;
+
+    @Column
+    private Date createdOn;
 
     @ManyToOne
     private User writer;
@@ -52,4 +55,11 @@ public class Comment {
         this.id = id;
     }
 
+    public Date getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
 }

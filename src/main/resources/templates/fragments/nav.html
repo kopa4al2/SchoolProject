@@ -49,15 +49,15 @@
                             class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                        <img src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
-                             alt="user-pic" class="user-img user-img-small">
+                        <img th:src="@{${#authentication.getPrincipal().getProfilePictureUrl()}}"
+                        alt="user-pic" class="user-img user-img-small">
                         <th:block th:text="${#authentication.getPrincipal().getUsername()}">
 
                         </th:block>
                     </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <img src="http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png"
+                    <img th:src="@{${#authentication.getPrincipal().getProfilePictureUrl()}}"
                          alt="user-pic" class="user-img user-img-medium">
                     <a class="dropdown-item" th:href="@{|/users/userid=${#authentication.getPrincipal().getId()}|}">
                         About me</a>

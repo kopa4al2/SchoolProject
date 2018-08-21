@@ -5,7 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -56,13 +59,13 @@ public class User implements UserDetails {
     @Column
     private Double balance = 0D;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> authorities;
 
     @ManyToMany
     private List<User> friends;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Product> productsInSale;
 
     @ManyToMany
@@ -71,7 +74,7 @@ public class User implements UserDetails {
     @ManyToMany
     private List<Product> productsBoughtLastWeek;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ManyToMany

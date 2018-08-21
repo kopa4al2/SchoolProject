@@ -2,8 +2,6 @@ package justme.projectAwesome.services.interfaces;
 
 import justme.projectAwesome.entities.Product;
 import justme.projectAwesome.models.binding.ProductEnlistBindingModel;
-import justme.projectAwesome.models.binding.VoteBindingModel;
-import justme.projectAwesome.models.view.ProductViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,9 +15,15 @@ public interface ProductService {
 
     void addProduct(ProductEnlistBindingModel bindingModel);
 
-    Product getById(String productId);
+    Product findById(String productId);
 
     void update();
 
+    Page<Product> findByTitleContaining(String value, Pageable pageable);
+
     boolean exist(String id);
+
+    void delete(String id);
+
+    Page<Product> findAllByOwner(String id, Pageable pageable);
 }

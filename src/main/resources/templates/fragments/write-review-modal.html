@@ -1,0 +1,27 @@
+<div class="modal fade" id="write-review-modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Write a review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/reviews/create/}" method="POST">
+                    <div class="form-group">
+                        <label class="form-control-label" for="title-input">Title:</label>
+                        <input class="form-control" id="title-input" type="text" name="title"
+                               placeholder="Review title">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="content-input">Content:</label>
+                        <textarea class="form-control" id="content-input" name="content" placeholder="Review content"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-outline-success w-100 mt-3" value="Submit review">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

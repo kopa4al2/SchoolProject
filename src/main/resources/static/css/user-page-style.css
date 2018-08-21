@@ -15,13 +15,39 @@
 }
 #img-section{
     width:200px;
+    position: relative;
+    /*width: 50%;*/
 }
-#img-section img{
+/*HOVER EFFECT*/
+.user-img-lg{
     width:150px;
     height:150px;
     border-radius:50%;
     border:1px solid teal;
+
+    opacity: 1;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
 }
+.pic-hover{
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+#img-section:hover .user-img-lg{
+    opacity: 0.3;
+}
+
+#img-section:hover .pic-hover {
+    opacity: 1;
+}
+/*END HOVER*/
 #info-section{
     padding:20px;
     display: flex;

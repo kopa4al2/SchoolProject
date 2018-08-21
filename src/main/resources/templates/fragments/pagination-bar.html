@@ -3,29 +3,37 @@
         <ul class='pagination pagination-centered'>
             <li th:class="page-item" th:classappend="${pages.isFirstPage()} ? 'disabled' : ''">
                 <a th:class="page-link"
-                   th:href='@{${pages.getUrl()}(page=0,size=${pages.getSize()})}'>←
-                    First</a>
+                   th:onclick="|searchEntity('0','${pages.getSize()}', '${searchEntity}')|">←First</a>
+                   <!--th:href='@{|${pages.getUrl()}(page=0,size=${pages.getSize()})|}'-->
+
             </li>
             <li th:class="page-item" th:classappend="${pages.hasPreviousPage()}? '' : 'disabled'">
                 <a th:class="page-link"
-                   th:href='@{${pages.getUrl()}(page=${pages.getNumber()-2},size=${pages.getSize()})}'
-                   title='Go to previous page'>«</a>
+                   th:onclick="|searchEntity('${pages.getNumber()-2}','${pages.getSize()}', '${searchEntity}')|"
+                   title='Go to previous page'>
+                   <!--th:href='@{${pages.getUrl()}(page=${pages.getNumber()-2},size=${pages.getSize()})}'-->
+                   «</a>
             </li>
             <li th:each='item : ${pages.getItems()}' th:class="page-item"
                 th:classappend="${item.isCurrent()}? 'active' : ''">
                 <span th:class="sr-only" th:if='${item.isCurrent()}' th:text='${item.getNumber()}'>1</span>
                 <a th:class="page-link"
-                   th:href='@{${pages.getUrl()}(page=${item.getNumber()-1},size=${pages.getSize()})}'><span
-                        th:text='${item.getNumber()}'>1</span></a>
+                   th:onclick="|searchEntity('${item.getNumber()-1}', '${pages.getSize()}', '${searchEntity}')|">
+                <!--th:href='@{${pages.getUrl()}(page=${item.getNumber()-1},size=${pages.getSize()})}'-->
+                   <span th:text='${item.getNumber()}'>1</span></a>
             </li>
             <li th:class="page-item" th:classappend="${pages.hasNextPage()}? '' : 'disabled'">
                 <a th:class="page-link"
-                   th:href='@{${pages.getUrl()}(page=${pages.getNumber()},size=${pages.getSize()})}'
-                   title='Go to next page'>»</a>
+                   th:onclick="|searchEntity('${pages.getNumber()}', '${pages.getSize()}', '${searchEntity}')|"
+                   title='Go to next page'>
+                   <!--th:href='@{${pages.getUrl()}(page=${pages.getNumber()},size=${pages.getSize()})}'-->
+                   »</a>
             </li>
             <li th:class="page-item" th:classappend="${pages.isLastPage()}? 'disabled' : ''">
                 <a th:class="page-link"
-                   th:href='@{${pages.getUrl()}(page=${pages.getTotalPages() - 1},size=${pages.getSize()})}'>Last
+                   th:onclick="|searchEntity('${pages.getTotalPages()-1}', '${pages.getSize()}', '${searchEntity}')|">
+                   <!--th:href='@{${pages.getUrl()}(page=${pages.getTotalPages() - 1},size=${pages.getSize()})}'-->
+                >Last
                     →</a>
             </li>
         </ul>

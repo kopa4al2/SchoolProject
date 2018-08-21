@@ -1,0 +1,29 @@
+<div th:fragment="comments-section(${comment})"
+     class="container">
+    <div class="row"
+         th:with="writer= ${comment.getWriter()}">
+        <div class="col-sm-8 col-lg-7">
+
+            <div class="panel panel-white post panel-shadow">
+                <div class="post-heading">
+                    <div class="pull-left image">
+
+                        <img th:if="${writer} != null" th:src="@{|${writer.getProfilePictureUrl()}|}"
+                             class="rounded-circle avatar"
+                             alt="user profile image">
+                    </div>
+                    <div class="pull-left meta">
+                        <div class="title h5">
+                            <a th:href="@{|/users/userid=${writer.getId()}|}"><b th:text="${writer.getUsername()}">username</b></a>
+                        </div>
+                        <h6 class="text-muted time" th:text="${#dates.format(comment.getCreatedOn(), 'dd-MMM-yyyy hh:mm')}"></h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="post-description">
+                    <p th:text="${comment.getContent()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

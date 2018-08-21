@@ -1,13 +1,17 @@
 package justme.projectAwesome.entities;
 
+import justme.projectAwesome.entities.interfaces.Commentable;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "reviews")
-public class Review {
+public class Review implements Commentable {
+
+    private static final int CONTENT_MAX_LENGTH = 1000;
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -18,7 +22,7 @@ public class Review {
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private String id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = CONTENT_MAX_LENGTH)
     private String content;
 
     @Column(nullable = false)
@@ -26,6 +30,9 @@ public class Review {
 
     @OneToOne
     private User writer;
+
+    @Column
+    private Date createdOn;
 
     @ManyToMany
     private List<Comment> comments;
@@ -65,8 +72,21 @@ public class Review {
         this.title = title;
     }
 
+    public Date getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public List<Comment> getComments() {
         return this.comments;
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 
     public void setComments(List<Comment> comments) {

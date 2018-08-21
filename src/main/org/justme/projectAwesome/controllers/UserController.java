@@ -1,18 +1,16 @@
 package justme.projectAwesome.controllers;
 
-import jdk.jshell.spi.ExecutionControl;
 import justme.projectAwesome.entities.User;
 import justme.projectAwesome.exceptions.NotFoundException;
 import justme.projectAwesome.exceptions.PasswordsDontMatchException;
 import justme.projectAwesome.models.binding.UserRegisterBindingModel;
 import justme.projectAwesome.services.interfaces.UserService;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -49,5 +47,13 @@ public class UserController extends BaseController {
             throw new NotFoundException("There is no such user");
         else
             return this.view("single-user-page", "user", userCandidate.get());
+    }
+
+    @PostMapping("/users/edit/userid={userId}")
+    public ModelAndView editUser(@PathVariable String id,
+                                 @RequestParam(name = "profile-pic") MultipartFile image) {
+//        this.userService.findById(id).get().setProfilePictureUrl();
+        System.out.println("da");
+        return this.view("/users/userid=" + id);
     }
 }

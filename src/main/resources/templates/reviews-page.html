@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="reviews" type="justme.projectAwesome.entities.Review[]"*/-->
+<!--/*@thymesVar id="review" type="justme.projectAwesome.entities.Review"*/-->
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+
+<body>
+<th:block th:replace="fragments/nav
+"></th:block>
+<div class="main-container">
+    <th:block th:replace="fragments/authentication-modals"></th:block>
+    <th:block th:replace="fragments/confirmation-modal"></th:block>
+    <th:block th:replace="fragments/write-review-modal"></th:block>
+
+    <form >
+        <input type="text" th:name="search-review">
+        <input type="submit" value="Search" class="btn btn-primary"></input>
+    </form>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#write-review-modal">Write a review</button>
+
+    <section class="render-review-container">
+        <th:block th:each="review : ${reviewsPages.getContent()}">
+            <div class="single-review">
+                <a th:href="@{|/reviews/reviewId=${review.getId()}|}" th:text="${review.getTitle()}"></a>
+            </div>
+        </th:block>
+    </section>
+</div>
+
+</body>
+</html>

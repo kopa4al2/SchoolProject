@@ -2,16 +2,23 @@ package justme.projectAwesome.models.binding;
 
 import justme.projectAwesome.entities.User;
 
-import java.util.Date;
+public class ReviewBindingModel {
 
-public class CommentBindingModel {
+    private String title;
 
     private String content;
 
     private User writer;
-    private Date createdOn;
 
-    public CommentBindingModel() {
+    public ReviewBindingModel() {
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -28,13 +35,5 @@ public class CommentBindingModel {
 
     public void setWriter(User writer) {
         this.writer = writer;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
     }
 }

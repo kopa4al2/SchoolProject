@@ -15,9 +15,13 @@
             <th:block th:replace="fragments/sales-nav"></th:block>
         </section>
         <div class="sales-render-section">
-            <form class="sell-product-form" th:action="@{/sales/enlist-product}" th:method="POST">
+            <form id="my-awesome-dropzone" class="dropzone sell-product-form" th:action="@{/sales/enlist-product}" th:method="POST"
+                  enctype="multipart/form-data">
+                <div class="dropzone-previews"></div>
                 <section class="input-section">
+                    <div class="text-center">
                     <h5 class="section-title"><strong>Insert product info</strong></h5>
+                    </div>
                     <div class="form-group">
                         <label for="sell-item-title">Item Title:</label>
                         <input id="sell-item-title" class="form-control" type="text" th:name="title"
@@ -33,37 +37,29 @@
                         <textarea id="sell-item-description" class="form-control" rows="5" th:name="description"
                                   placeholder="Description"></textarea>
                     </div>
-                </section>
-                <section class="checkbox-section">
-                    <h5 class="section-title"><strong>Select category</strong></h5>
-                    <div class="form-check">
-                        <th:block th:each="category : ${categories}">
-                            <div class="single-category">
-                                <input class="form-check-input"
-                                       id="${category.getId(}"
-                                       type="checkbox"
-                                       th:name="category"
-                                       th:value="${category.getCategoryName()}">
-                                <label class="form-check-label" for="${category.getId(}}"
-                                       th:text="${category.getCategoryName()}"></label>
-                            </div>
-                        </th:block>
-                    </div>
-                </section>
-                <section class="upload-images">
-                    <h5 class="section-title"><strong>Upload images</strong></h5>
-                    <div class="form-control-file">
-                        <label for="upload-images" class="upload-image-btn">Upload</label>
-                        <input class="form-control-file" type="file" name="file" id="upload-images"
-                               multiple>
-                    </div>
-                    <div class="preview-images"></div>
 
+                    <div class="form-select-button select-categories">
+                        <select data-placeholder="Select categories" id="select-category" th:name="category"
+                                class="selectpicker" data-live-search="true" multiple onchange="addCategory()">
+                            <optgroup label="">
+                                <option value="" selected disabled>Select categories</option>
+                            </optgroup>
+                            <th:block th:each="category : ${categories}">
+                                <option th:name="category"
+                                        th:value="${category.getCategoryName()}"
+                                        th:text="${category.getCategoryName()}">
+                                </option>
+                            </th:block>
+                        </select>
+                        <div>Selected categories: </div>
+                        <div id="selected-categories"></div>
+                    </div>
                 </section>
                 <input id="submit-product-btn" class="btn btn-primary" type="submit" th:value="Submit">
             </form>
         </div>
     </div>
+
 </div>
 </body>
 </html>

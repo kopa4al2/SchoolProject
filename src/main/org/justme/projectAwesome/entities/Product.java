@@ -1,16 +1,19 @@
 package justme.projectAwesome.entities;
 
-import justme.projectAwesome.entities.enums.VoteType;
+import justme.projectAwesome.entities.interfaces.Commentable;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Commentable {
+
+    private static final int DESCRIPTION_MAX_LENGTH = 1000;
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -19,7 +22,6 @@ public class Product {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    @NotFound(action = NotFoundAction.IGNORE)
     private String id;
 
     @ManyToOne
@@ -28,7 +30,7 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
-    @Column
+    @Column(length = DESCRIPTION_MAX_LENGTH)
     private String description;
 
     @Column(nullable = false)
@@ -37,7 +39,7 @@ public class Product {
     @Column(nullable = false, updatable = false)
     private Date uploadedOn;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ElementCollection
@@ -45,7 +47,8 @@ public class Product {
     @OrderColumn
     private Set<String> imgsUrl;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
     private Set<Category> categories;
 
     public Product() {
@@ -117,7 +120,14 @@ public class Product {
     }
 
     public List<Comment> getComments() {
+        if(this.comments == null)
+            return new ArrayList<>();
         return this.comments;
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 
     public void setComments(List<Comment> comments) {

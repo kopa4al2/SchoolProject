@@ -10,58 +10,79 @@
 <th:block th:replace="fragments/nav
 "></th:block>
 <th:block th:replace="fragments/confirmation-modal"></th:block>
-<div class="main-container" th:with="users=${pages.getContent()}">
-    <div th:if="${not #lists.isEmpty(users)}">
-        <h2>All users</h2>
-        <table class="table table-responsive">
-            <tr>
-                <th>No.</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Promote</th>
-                <th>Demote</th>
-                <th>Delete</th>
-            </tr>
-            <tr th:each="user,iterationStatus : ${users}"
-                th:classappend="${user.isAdmin()} ? 'table-danger' : (${user.isModerator()} ? 'table-warning' : '')">
-                <td th:text="${iterationStatus.count + (pages.size * (pages.number-1))}">No.</td>
-                <td><a th:href="@{|/users/userid=${user.getId()}|}" th:text="${user.getUsername()}">username</a></td>
-                <td th:text="${user.getEmail()}">email</td>
-                <form th:action="@{|/users/userid=${user.getId()}|}" th:method="POST">
+<div class="main-container">
+    <section class="search-section">
+        <input class="w-50" id="search-admin" onkeyup="filterUsers()" type="search" placeholder="Filter results by"/>
+        <select class="selectpicker" name="select" id="search-select">
+            <option value="username">By Username</option>
+            <option value="email">By Email</option>
+        </select>
+        <button class="btn btn-primary">Advanced search</button>
+    </section>
+    <div th:with="users=${pages.getContent()}" th:fragment="all-users-table" id="all-users-table">
+        <div>
+            <h2>All users</h2>
+            <table class="table table-responsive">
+                <tr>
+                    <th>No.</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Promote</th>
+                    <th>Demote</th>
+                    <th>Delete</th>
+                </tr>
+                <tr th:each="user,iterationStatus : ${users}" th:unless="${#authentication.getPrincipal().getId() == user.getId()}"
+
+                    th:classappend="${user.isAdmin()} ? 'table-danger' :
+                 (${user.isModerator()} ? 'table-warning' : '')">
+
+                    <td th:text="${iterationStatus.count + (pages.size * (pages.number-1))}">No.</td>
+                    <td><a th:href="@{|/users/userid=${user.getId()}|}" th:text="${user.getUsername()}">username</a>
+                    </td>
+                    <td th:text="${user.getEmail()}">email</td>
+
                     <td>
-                        <button class="btn btn-success btn-xs" th:name="promote">Promote</button>
+                        <form th:action="@{|/users/userid=${user.getId()}|}" th:method="POST">
+                            <button class="btn btn-success btn-xs" th:name="promote">Promote
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-xs" th:name="demote">Demote</button>
+                        <form th:action="@{|/users/userid=${user.getId()}|}" th:method="POST">
+                            <button class="btn btn-warning btn-xs" th:name="demote">Demote</button>
+                        </form>
                     </td>
-                </form>
+
                     <td>
                         <button type="button"
-                               th:data-href="@{|/users/userid=${user.getId()}|}"
-                               data-toggle="modal"
+                                th:data-href="@{|/users/userid=${user.getId()}|}"
+                                data-toggle="modal"
                                 data-message="All products, reviews and comments from the user will be deleted as well"
-                                data-target="#confirmModal"
-                                class="btn btn-danger btn-xs" th:name="delete">Delete</button>
+                                data-target="#confirm-modal"
+                                class="btn btn-danger btn-xs" th:name="delete">Delete
+                        </button>
                     </td>
-            </tr>
-        </table>
+                </tr>
+            </table>
 
-    </div>
-
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="pagination"><p>Showing <span class="badge"
-                                                     th:text="${pages.getSize() * (pages.getNumber()-1) + 1}"></span> of
-                <span class="badge"
-                      th:text="${pages.isLastPage() ? pages.getTotalElements() : pages.getSize() * (pages.getNumber()-1)+ pages.getSize()}"></span>
-                from
-                <span class="badge"
-                      th:text="${pages.getTotalElements()}"></span>
-                users</p></div>
         </div>
 
-        <div class="col-sm-7">
-            <th:block th:replace="fragments/pagination-bar"></th:block>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="pagination"><p>Showing <span class="badge"
+                                                         th:text="${pages.getSize() * (pages.getNumber()-1) + 1}"></span>
+                    of
+                    <span class="badge"
+                          th:text="${pages.isLastPage() ? pages.getTotalElements() : pages.getSize() * (pages.getNumber()-1)+ pages.getSize()}"></span>
+                    from
+                    <span class="badge"
+                          th:text="${pages.getTotalElements()}"></span>
+                    users</p></div>
+            </div>
+
+            <div th:with="searchEntity = 'users'" class="col-sm-7">
+                <th:block th:replace="fragments/pagination-bar"></th:block>
+            </div>
         </div>
     </div>
 </div>

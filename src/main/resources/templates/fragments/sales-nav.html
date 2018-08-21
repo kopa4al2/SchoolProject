@@ -9,16 +9,12 @@
     </button>
     <div class="collapse navbar-collapse" id="sales-navigation">
         <ul class="navbar-nav d-flex flex-column p-2 justify-content-between">
-            <li class="nav-item p-3" sec:authority="(hasAuthority('USER'))"><a class="nav-link" href="/sales/sell">
-                List an item</a></li>
+            <li class="nav-item p-3" sec:authority="(hasAuthority('USER'))"><a class="nav-link" href="/sales/sell">Enlist an item for sale</a></li>
             <li class="nav-item p-3"><a class="nav-link" href="/sales">
                 All sales</a></li>
-            <li class="nav-item p-3"><a class="nav-link" href="#" id="search">
-                Search</a></li>
             <li class="nav-item p-3" sec:authority="(hasAuthority('MODERATOR'))"><a class="nav-link" href="/sales/add-category"
                                                                                     id="add-category-btn">
                 Add category</a></li>
-
         </ul>
     </div>
 </nav>

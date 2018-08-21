@@ -1,9 +1,9 @@
 package justme.projectAwesome.services;
 
-import justme.projectAwesome.entities.Product;
 import justme.projectAwesome.entities.User;
 import justme.projectAwesome.entities.UserRole;
 import justme.projectAwesome.models.binding.UserRegisterBindingModel;
+import justme.projectAwesome.repositories.CommentRepository;
 import justme.projectAwesome.repositories.ProductRepository;
 import justme.projectAwesome.repositories.UserRepository;
 import justme.projectAwesome.services.interfaces.UserRoleService;
@@ -20,12 +20,12 @@ import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private static final String DEFAULT_PROFILE_PICTURE_URL = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
 
     private final UserRepository userRepository;
 
@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final ProductRepository productRepository;
+    private final CommentRepository commentRepository;
 
 
     @Autowired
@@ -43,18 +44,20 @@ public class UserServiceImpl implements UserService {
                            ModelMapper modelMapper,
                            UserRoleService userRoleService,
                            BCryptPasswordEncoder passwordEncoder,
-                           ProductRepository productRepository) {
+                           ProductRepository productRepository,
+                           CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
         this.productRepository = productRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
     public boolean createUser(UserRegisterBindingModel user) {
         User userEntity = this.modelMapper.map(user, User.class);
-
+        userEntity.setProfilePictureUrl(DEFAULT_PROFILE_PICTURE_URL);
         userEntity.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
 
         UserRole roleUser;
@@ -82,19 +85,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> getAllUsersOrderedById() {
-        return this.userRepository.findAllByOrderByIdAsc();
-    }
-
-    @Override
-    public Set<User> getAllUsers() {
-        return this.userRepository
-                .findAll()
-                .stream()
-                .collect(Collectors.toUnmodifiableSet());
-    }
-
-    @Override
     public User findByUsername(String loggedInUsername) {
         return this.userRepository.findByUsername(loggedInUsername);
     }
@@ -108,25 +98,24 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return this.userRepository.findAll();
     }
+
     @Override
     public void delete(String id) {
         User u = this.userRepository.findById(id).get();
         u.setAuthorities(new HashSet<>());
-        for (Product product : this.productRepository.findAllByOwner(u)) {
-            this.productRepository.delete(product);
-        }
+
         this.userRepository.delete(this.userRepository.findById(id).get());
     }
 
     @Override
     public void demote(String id) {
         User u = this.userRepository.findById(id).get();
-        if(u.getAuthorities().contains(getAuthority("OWNER")))
+        if (u.getAuthorities().contains(getAuthority("OWNER")))
             //TODO: maybe throw an exception
             return;
-        if (u.getAuthorities().contains(getAuthority("ADMIN"))){
+        if (u.getAuthorities().contains(getAuthority("ADMIN"))) {
             u.removeAuthority(getAuthority("ADMIN"));
-        } else if(u.getAuthorities().contains(getAuthority("MODERATOR"))) {
+        } else if (u.getAuthorities().contains(getAuthority("MODERATOR"))) {
             u.removeAuthority(getAuthority("MODERATOR"));
         }
         this.userRepository.saveAndFlush(u);
@@ -135,11 +124,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void promote(String id) {
         User u = this.userRepository.findById(id).get();
-        if (!u.isAdmin() && u.getAuthorities().contains(getAuthority("MODERATOR"))){
+        if (!u.isAdmin() && u.getAuthorities().contains(getAuthority("MODERATOR"))) {
             u.addAuthority(getAuthority("ADMIN"));
-        } else if(!u.isAdmin() && !u.getAuthorities().contains(getAuthority("MODERATOR"))) {
+        } else if (!u.isAdmin() && !u.getAuthorities().contains(getAuthority("MODERATOR"))) {
             u.addAuthority(getAuthority("MODERATOR"));
-        } else if(u.isAdmin())
+        } else if (u.isAdmin())
             //TODO: maybe throw an exception
             return;
         this.userRepository.saveAndFlush(u);
@@ -148,6 +137,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Page<User> findAllByUsernameContaining(String username, Pageable pageable) {
+        return this.userRepository.findAllByUsernameContaining(username, pageable);
+    }
+
+    @Override
+    public Page<User> findAllByEmailContaining(String email, Pageable pageable) {
+
+        return this.userRepository.findAllByEmailContaining(email, pageable);
+    }
+
+    @Override
+    public boolean exists(String id) {
+        return this.userRepository.findById(id).isPresent();
     }
 
     private UserRole getAuthority(String authority) {

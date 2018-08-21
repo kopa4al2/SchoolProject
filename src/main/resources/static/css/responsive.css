@@ -16,4 +16,7 @@
     .sell-product-form{
         flex-direction: column;
     }
+    .product-description{
+        flex-direction: column;
+    }
 }
