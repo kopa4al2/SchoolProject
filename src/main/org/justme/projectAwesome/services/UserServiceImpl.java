@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
         }
 
         this.userRepository.save(userEntity);
+
         return true;
     }
 
@@ -153,6 +154,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean exists(String id) {
         return this.userRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public void update(User user) {
+        this.userRepository.saveAndFlush(user);
     }
 
     private UserRole getAuthority(String authority) {

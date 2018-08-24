@@ -8,32 +8,32 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/nav"></th:block>
+<th:block th:replace="fragments/navs/nav"></th:block>
+<th:block th:replace="fragments/success-message"></th:block>
 <div class="main-container">
     <div class="sales-container">
         <section class="sales-nav">
-            <th:block th:replace="fragments/sales-nav"></th:block>
-            <th:block th:replace="fragments/confirmation-modal"></th:block>
+            <th:block th:replace="fragments/navs/sales-nav"></th:block>
+            <th:block th:replace="fragments/modals/confirmation-modal"></th:block>
         </section>
-        <section class="sales-render-section">
-            <div class="add-category-container">
-                <section class="add-category"><h5 class="section-title">Add category</h5>
+        <div class="add-category-container">
+            <section class="add-category"><h5 class="section-title">Add category</h5>
                 <th:block th:replace="fragments/add-category-form"></th:block>
-                </section>
-                <section class="list-categories">
-                    <h5 class="section-title">All categories</h5>
-                    <th:block th:each="category : ${categories}">
-                        <div class="singe-category">
-                            <span th:text="${category.getCategoryName()}"></span>
-                            <span class="delete-category"><i data-toggle="modal"
-                                                             data-message="All products with this category will have it removed"
-                                                             data-target="#confirmModal"
-                                                             th:data-href="@{|/sales/delete-category/${category.getId()}|}" class="fa fa-window-close" aria-hidden="true"></i></span>
-                        </div>
-                    </th:block>
-                </section>
-            </div>
-        </section>
+            </section>
+            <section class="list-categories">
+                <h5 class="section-title">All categories</h5>
+                <th:block th:each="category : ${categories}">
+                    <div class="singe-category">
+                        <span th:text="${category.getCategoryName()}"></span>
+                        <span class="delete-category"><i data-toggle="modal"
+                                                         data-message="All products with this category will have it removed"
+                                                         data-target="#confirm-modal"
+                                                         th:data-href="@{|/sales/delete-category/${category.getId()}|}"
+                                                         class="fa fa-window-close" aria-hidden="true"></i></span>
+                    </div>
+                </th:block>
+            </section>
+        </div>
     </div>
 </div>
 </body>

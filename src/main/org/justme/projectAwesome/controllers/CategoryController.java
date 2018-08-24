@@ -38,6 +38,7 @@ public class CategoryController extends BaseController{
     }
     @PostMapping("/sales/delete-category/{id}")
     public ModelAndView deleteCategory(@PathVariable String id) {
+
         this.categoryService.deleteById(id);
         return super.redirect("/sales/add-category");
     }

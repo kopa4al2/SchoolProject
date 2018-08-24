@@ -1,19 +1,31 @@
-<form class="form-authentication" th:action="@{/register}" th:method="POST">
+<form class="form-authentication" onsubmit="return isFormValidated()" th:action="@{/register}" th:method="POST">
     <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" name="username" class="form-control" id="username" required/>
+        <label for="register-username">Username:</label>
+        <input
+                type="text" name="username" class="valid-input form-control" id="register-username" />
+        <span class="error-span small text-danger"></span>
         <small class="form-text text-muted">Username must be no longer than 10 symbols</small>
     </div>
     <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" name="password" class="form-control" id="password" required/>
+        <label for="register-email">Email:</label>
+        <input type="text" name="email" class="valid-input form-control" id="register-email"/>
+        <span class="error-span small text-danger"></span>
+        <small class="form-text text-muted">Example myEmail@gmail.com</small>
+    </div>
+
+    <div class="form-group">
+        <label for="register-password">Password:</label>
+        <input type="password" name="password" class="valid-input form-control" id="register-password"/>
+        <span class="error-span small text-danger"></span>
         <small class="form-text text-muted">Password must be atleast 6 symbols</small>
     </div>
     <div class="form-group">
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required/>
+        <label for="register-confirm-password">Confirm Password:</label>
+        <input id="register-confirm-password" type="password" name="confirmPassword" class="valid-input form-control" />
+        <span class="error-span small text-danger"></span>
     </div>
-    <div class="text-center">
+    <input type="text" name="success-message-identifier" hidden value="register">
+    <div id="register-submit" class="text-center">
         <button type="submit" class="btn btn-primary">Register</button>
     </div>
 </form>

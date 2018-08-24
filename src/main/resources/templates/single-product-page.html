@@ -7,20 +7,27 @@
     <th:block th:replace="fragments/head"></th:block>
 </head>
 
-<body>
-<th:block th:replace="fragments/nav"></th:block>
-<th:block th:replace="fragments/confirmation-modal"></th:block>
-<th:block th:replace="fragments/comment-form-modal(product)"></th:block>
+<body th:with="entity= ${product}, entityName=${'product'}">
+<th:block th:replace="fragments/modals/authentication-modals"></th:block>
+<th:block th:replace="fragments/navs/nav"></th:block>
+<th:block th:replace="fragments/modals/confirmation-modal"></th:block>
+<th:block th:replace="fragments/modals/product-images-modal"></th:block>
+<th:block th:replace="fragments/success-message"></th:block>
+
+<th:block th:replace="fragments/modals/comment-form-modal">
+</th:block>
 <div class="main-container">
+
     <div class="container">
-        <div th:if=
-                     "${#authentication.getPrincipal().getId() == product.getOwner().getId()
+        <div sec:authorize="isAuthenticated()"
+             th:if="${#authentication.getPrincipal().getId() == product.getOwner().getId()
                      || #authentication.getPrincipal().isAdmin()}"
              class="float-right">
             <button class="btn btn-warning">Edit</button>
             <button class="btn btn-danger"
                     data-toggle="modal"
                     data-target="#confirm-modal"
+                    data-on-success="remove-product"
                     data-message="The product and all of its comments will be deleted permanently"
                     th:data-href="@{|/sales/product/delete/id=${product.getId()}|}">Delete
             </button>
@@ -36,27 +43,39 @@
                       th:text="'Uploaded on: ' + ${#dates.format(product.getUploadedOn(), 'dd-MMM-yyyy  HH:mm')}"></span>
             </h3>
             <div class="product-description">
-                <section class="image-section">
-                    <img class="thumb-image" th:src="@{${product.getImgsUrl()[0]}}" alt="img">
-                    <button class="btn btn-primary">Show All</button>
-                    <!--<div class="preview-images" th:each="imageUrl : ${product.getImgsUrl()}">-->
-                        <!--<img class="thumb-image" th:src="@{${imageUrl}}" alt="img">-->
-                    <!--</div>-->
+                <section th:if="${#lists.isEmpty(product.getImgsUrl())}">
+                    <b class="h2">No images</b>
                 </section>
-                <section class="description-section">
+                <section th:if="${!#lists.isEmpty(product.getImgsUrl())}" class="image-section">
+                    <img id="image-preview" th:src="@{${product.getImgsUrl()[0]}}" alt="img">
+                    <button id="show-all-images"
+                            data-toggle="modal"
+                            data-target="#product-images">
+                    </button>
+                </section>
+                <sectcommention class="px-4 description-section">
+                    <b class="h1" th:if="${product.getDescription() == ''}">
+                        No description
+                    </b>
                     <p th:text="${product.getDescription()}"></p>
-                    <p class="small" th:text="'Price: ' + ${product.getPrice()} + '$'"></p>
-                </section>
+                </sectcommention>
                 <section class="category-section">
-                    <b>Categories:</b>
-                    <ul class="list-group" th:each="category : ${product.getCategories()}">
-                        <li class="list-group-item" th:text="${category.getCategoryName()}"></li>
+                    <p class="small text-danger" th:text="'Price: ' + ${product.getPrice()} + '$'"></p>
+                    <a sec:authorize="isAuthenticated()"
+                       th:href="@{|/sales/order/?productId=${product.getId()}&sellerId=${product.getOwner().getId()}&buyerId=${#authentication.getPrincipal().getId()}|}">
+                        Order
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <p class="h5 mt-3">Categories:</p>
+                    <ul class="h6" th:each="category : ${product.getCategories()}">
+                        <li class="h6 small" th:text="${category.getCategoryName()}"></li>
                     </ul>
                 </section>
             </div>
 
         </div>
-        <button class="btn btn-outline-success mt-4" data-target="#modal-comment-box" data-toggle="modal">Add a comment
+        <button sec:authorize="isAuthenticated()" class="btn btn-outline-success mt-4" data-target="#modal-comment-box"
+                data-toggle="modal">Add a comment
         </button>
         <section th:each="comment : ${product.getComments()} " class="comments-section">
             <th:block th:replace="fragments/comments-section(comment)"></th:block>

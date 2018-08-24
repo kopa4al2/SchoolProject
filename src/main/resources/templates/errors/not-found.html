@@ -7,10 +7,11 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/navs/nav"></th:block>
-<th:block th:replace="fragments/success-message"></th:block>
+<th:block th:replace="fragments/navs/nav
+"></th:block>
 <div class="main-container">
     <th:block th:replace="fragments/modals/authentication-modals"></th:block>
+    <h2 class="text-center text-danger" th:text="|Error: ${error}|"></h2>
 </div>
 </body>
 </html>

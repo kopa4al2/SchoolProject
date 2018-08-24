@@ -8,14 +8,14 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/nav"></th:block>
+<th:block th:replace="fragments/navs/nav"></th:block>
 <div class="main-container">
     <div class="sales-container">
         <section class="sales-nav">
-            <th:block th:replace="fragments/sales-nav"></th:block>
+            <th:block th:replace="fragments/navs/sales-nav"></th:block>
         </section>
         <div class="sales-render-section">
-            <form id="my-awesome-dropzone" class="dropzone sell-product-form" th:action="@{/sales/enlist-product}" th:method="POST"
+            <form id="product-images-dropzone" class="dropzone sell-product-form" th:action="@{/sales/enlist-product}" th:method="POST"
                   enctype="multipart/form-data">
                 <div class="dropzone-previews"></div>
                 <section class="input-section">

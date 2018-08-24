@@ -9,23 +9,69 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/nav
+<th:block th:replace="fragments/navs/nav
 "></th:block>
+<th:block th:replace="fragments/success-message"></th:block>
 <div class="main-container">
-    <th:block th:replace="fragments/authentication-modals"></th:block>
-    <th:block th:replace="fragments/confirmation-modal"></th:block>
-    <th:block th:replace="fragments/write-review-modal"></th:block>
+    <th:block th:replace="fragments/modals/authentication-modals"></th:block>
+    <th:block th:replace="fragments/modals/confirmation-modal"></th:block>
+    <th:block th:replace="fragments/modals/write-review-modal"></th:block>
+    <button sec:authorize="isAuthenticated()" class="mx-auto mb-3 w-50 btn btn-outline-primary" data-toggle="modal" data-target="#write-review-modal">Write a review</button>
+    <section class="search-section">
+        <input id="search-review" onkeyup="filterReviews()" class="search-box form-control mr-sm-2" type="search" placeholder="Filter by title" aria-label="Search">
+        <button id="filter" class="btn btn-primary float-left" data-toggle="modal"
+                data-target="#search-modal">Advanced Search</button>
+    </section>
 
-    <form >
-        <input type="text" th:name="search-review">
-        <input type="submit" value="Search" class="btn btn-primary"></input>
-    </form>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#write-review-modal">Write a review</button>
-
-    <section class="render-review-container">
+    <section class="render-review-container" th:fragment="all-reviews-fragment">
         <th:block th:each="review : ${reviewsPages.getContent()}">
-            <div class="single-review">
-                <a th:href="@{|/reviews/reviewId=${review.getId()}|}" th:text="${review.getTitle()}"></a>
+            <div class="single-review mx-auto">
+                <div class="row"
+                     th:with="writer= ${review.getWriter()}">
+                    <div class="mx-auto col-sm-8 col-lg-7">
+
+                        <div class="panel panel-white post panel-shadow">
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img th:src="@{|${writer.getProfilePictureUrl()}|}"
+                                         class="rounded-circle avatar"
+                                         alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="small">
+                                        <span>Written by:</span>
+                                        <a th:href="@{|/users/userid=${writer.getId()}|}"><b
+                                                th:text="${writer.getUsername()}">username</b></a>
+                                    </div>
+                                    <h6 class="text-muted time"
+                                        th:text="${#dates.format(review.getCreatedOn(), 'dd-MMM-yyyy hh:mm')}"></h6>
+                                </div>
+
+                                <div sec:authorize="isAuthenticated()"
+                                     th:if="${#authentication.getPrincipal().getId() == writer.getId() ||
+                                 #authentication.getPrincipal().isAdmin()}"
+                                     class="ml-lg-auto ml-xl-auto">
+                                    <button class="btn btn-warning ">Edit</button>
+                                    <button class="btn btn-danger"
+                                            th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}"
+                                            data-toggle="modal"
+                                            data-message="The review and all of its comments will be deleted"
+                                            data-target="#confirm-modal">Delete</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="review-title">
+                                <a th:href="@{|/reviews/reviewId=${review.getId()}|}" th:text="${review.getTitle()}"></a>
+                            </h3>
+                            <div class="post-description review-post-description">
+                                <p th:text="${#strings.abbreviate(review.getContent(), 200)}"></p>
+                            </div>
+                            <div class="h6 text-center">
+                                <a class="small" th:href="@{|/reviews/reviewId=${review.getId()}|}">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </th:block>
     </section>

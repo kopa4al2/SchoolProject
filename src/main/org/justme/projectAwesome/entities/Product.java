@@ -47,8 +47,7 @@ public class Product implements Commentable {
     @OrderColumn
     private Set<String> imgsUrl;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Category> categories;
 
     public Product() {

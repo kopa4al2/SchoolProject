@@ -1,0 +1,30 @@
+<div class="user-navbar-container mt-3 px-1">
+    <nav class="navbar navbar-expand-md navbar-light">
+        <button class="navbar-toggler mx-auto w-100 " type="button"
+                data-toggle="collapse"
+                data-target="#user-nav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="user-nav">
+            <ul class="mx-auto text-center navbar-nav d-flex justify-content-around">
+
+                <li class="nav-item p-3">
+                    <a id="items-for-sale" class="nav-link" th:href="@{|/users/info/items-for-sale/userid=${user.getId()}|}">Items for sale</a>
+                </li>
+
+                <li class="nav-item p-3">
+                    <a class="nav-link" th:href="@{|/users/info/items-sold/userid=${user.getId()}|}">Items sold</a>
+                </li>
+
+                <li class="nav-item p-3">
+                    <a class="nav-link" th:href="@{|/users/info/items-bought/userid=${user.getId()}|}">Items bought</a>
+                </li>
+                <li class="nav-item p-3">
+                    <a class="nav-link" th:href="@{|/users/info/reviews-written/userid=${user.getId()}|}">Reviews written</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

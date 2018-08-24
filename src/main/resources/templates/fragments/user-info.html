@@ -3,22 +3,33 @@
     <div class="section-container">
         <section id="img-section">
             <img class="user-img-lg" th:src="@{|${user.getProfilePictureUrl()}|}"
-            alt="profile-pic"/>
+                 alt="profile-pic"/>
             <div class="pic-hover">
-                <form method="post" th:action="@{|/users/edit/userId=${user.getId()}|}">
-                    <button onclick="$('#edit-profile-pic').trigger('click'); return true;" class="btn-primary">Change</button>
-                <input id="edit-profile-pic" type="file" name="profile-pic" hidden>
-                </form>
+
             </div>
+            <button id="toggle-user-pic-btn"
+                    data-toggle="modal"
+                    data-target="#change-user-pic-modal"
+                    th:data-message="${user.getId()}"
+            >Change
+            </button>
         </section>
         <section id="info-section">
-            <span class="section-field">First Name:<span class="db-loaded-info" th:text="${user.getFirstName()}"></span></span>
-            <span class="section-field px-1">Surname: <span class="db-loaded-info" th:text="${user.getSurName()}"></span></span>
-            <span class="section-field px-1">Last name: <span class="db-loaded-info" th:text="${user.getLastName()}"></span></span>
+            <span class="section-field">First Name:
+
+                <span class="db-loaded-info" th:text="${user.getFirstName() == '' ? user.getFirstName() : 'Not specified' }"></span>
+            </span>
+            <span class="section-field px-1">Surname: <span class="db-loaded-info"
+                                                            th:text="${user.getSurName() == '' ? user.getSurName() : 'Not specified'}"></span></span>
+            <span class="section-field px-1">Last name: <span class="db-loaded-info"
+                                                              th:text="${user.getLastName() == '' ? user.getLastName() : 'Not specified'}"></span></span>
             <span class="section-field px-1">Age: <span class="db-loaded-info" th:text="${user.getAge()}"></span></span>
-            <span class="section-field px-1">Phone Number: <span class="db-loaded-info" th:text="${user.getPhoneNumber()}"></span></span>
-            <span class="section-field px-1">City: <span class="db-loaded-info" th:text="${user.getCity()}"></span></span>
-            <span class="section-field px-1">Country: <span class="db-loaded-info" th:text="${user.getCountry()}"></span></span>
+            <span class="section-field px-1">Phone Number: <span class="db-loaded-info"
+                                                                 th:text="${user.getPhoneNumber() == '' ? user.getPhoneNumber() : 'Not specified'}"></span></span>
+            <span class="section-field px-1">City: <span class="db-loaded-info"
+                                                         th:text="${user.getCity() == '' ? user.getCity() : 'Not specified'}"></span></span>
+            <span class="section-field px-1">Country: <span class="db-loaded-info"
+                                                            th:text="${user.getCountry() == '' ? user.getCountry() : 'Not specified'}"></span></span>
         </section>
     </div>
 </div>

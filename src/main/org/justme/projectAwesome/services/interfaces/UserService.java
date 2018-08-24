@@ -32,4 +32,6 @@ public interface UserService extends UserDetailsService {
     Page<User> findAllByEmailContaining(String email, Pageable pageable);
 
     boolean exists(String id);
+
+    void update(User user);
 }

@@ -1,6 +1,5 @@
 package justme.projectAwesome.services.interfaces;
 
-import justme.projectAwesome.entities.Product;
 import justme.projectAwesome.entities.Review;
 import justme.projectAwesome.models.binding.ReviewBindingModel;
 import org.springframework.data.domain.Page;
@@ -17,4 +16,5 @@ public interface ReviewService {
 
     Review findById(String id);
 
+    Page<Review> findAllByTitleContaining(String title, Pageable pageable);
 }

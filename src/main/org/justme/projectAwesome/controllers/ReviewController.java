@@ -1,7 +1,6 @@
 package justme.projectAwesome.controllers;
 
 import justme.projectAwesome.entities.Review;
-import justme.projectAwesome.exceptions.NotFoundException;
 import justme.projectAwesome.models.binding.ReviewBindingModel;
 import justme.projectAwesome.services.interfaces.ReviewService;
 import justme.projectAwesome.services.interfaces.UserService;
@@ -45,14 +44,19 @@ public class ReviewController extends BaseController{
         return super.redirect("/reviews");
     }
 
-    @PostMapping("/reviews/delete/{id}")
+    @PostMapping("/reviews/delete/reviewId={id}")
     public ModelAndView deleteReview(@PathVariable String id) {
 
-        if(!this.reviewService.exists(id))
-            throw new NotFoundException("There is no such review");
-        this.reviewService.deleteReview(id);
+//        if(!this.reviewService.exists(id))
+//            throw new NotFoundException("There is no such review");
+//        this.reviewService.deleteReview(id);
+        System.out.println("minah");
+        return super.redirect("/reviews", "redirectUrl", "/reviews");
+    }
 
-        return super.redirect("/reviews");
+    @GetMapping("reviews/reviewId={reviewId}")
+    public ModelAndView getSingleReviewPage(@PathVariable String reviewId) {
+        return super.view("single-review-page", "review", this.reviewService.findById(reviewId));
     }
 
 }

@@ -36,7 +36,7 @@ public class CommentController extends BaseController {
         this.reviewSerice = reviewSerice;
     }
 
-    @PostMapping("/sales/product/comment/{productId}")
+    @PostMapping("/product/comment/{productId}")
     public ModelAndView commentProduct(@PathVariable String productId,
                                       @ModelAttribute CommentBindingModel commentBindingModel) {
 
@@ -57,7 +57,7 @@ public class CommentController extends BaseController {
         commentBindingModel.setWriter(this.userService.findByUsername(super.getLoggedInUsername()));
         this.commentService.comment(reviewId, commentBindingModel, this.reviewSerice.findById(reviewId));
 
-        return super.redirect("/sales/product/id=" + reviewId);
+       return super.redirect("/sales/product/id=" + reviewId);
     }
 
 

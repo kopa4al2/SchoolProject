@@ -294,4 +294,8 @@ public class User implements UserDetails {
         return !this.authorities.contains(new UserRole("MODERATOR")) &&
                !this.isAdmin();
     }
+
+    public boolean isOwner() {
+        return this.authorities.contains(new UserRole("OWNER"));
+    }
 }

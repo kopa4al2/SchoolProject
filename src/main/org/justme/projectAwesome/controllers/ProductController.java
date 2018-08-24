@@ -1,8 +1,6 @@
 package justme.projectAwesome.controllers;
 
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import justme.projectAwesome.entities.Category;
 import justme.projectAwesome.entities.Product;
 import justme.projectAwesome.exceptions.InvalidProductException;
@@ -26,14 +24,11 @@ import java.util.*;
 @Controller
 public class ProductController extends BaseController {
 
-    private static final String CLOUDINARY_API_KEY = "516829359226793";
-    private static final String CLOUDINARY_API_SECRET = "wLPI5A00m65ZC7vzch6Bx3x4D4c";
-    private static final String CLOUDINARY_API_CLOUD_NAME = "durmddeoj";
 
     private ProductService productService;
     private CategoryService categoryService;
     private UserService userService;
-    private Cloudinary cloudinary;
+
 
     @Autowired
     public ProductController(ProductService productService,
@@ -42,7 +37,6 @@ public class ProductController extends BaseController {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
-        this.cloudinary = new Cloudinary("cloudinary://"+CLOUDINARY_API_KEY+":"+CLOUDINARY_API_SECRET+"@"+CLOUDINARY_API_CLOUD_NAME);
     }
     @GetMapping("/sales")
     public ModelAndView allProductsPage(@PageableDefault(size = 10)Pageable pageable) {
@@ -71,16 +65,8 @@ public class ProductController extends BaseController {
                                              MultipartHttpServletRequest request,
                                              @RequestParam(name = "category", required = false) List<String> categories) throws IOException {
 
-        Map uploadResult = null;
-        Set<String> uploadedImagesUrls = new HashSet<>();
 
-        Iterator<String> fileNames = request.getFileNames();
-        while(fileNames.hasNext()) {
-            String fileName = fileNames.next();
-            uploadResult = cloudinary.uploader().upload(request.getFile(fileName).getBytes(),
-                    ObjectUtils.asMap("resource_type", "auto"));
-            uploadedImagesUrls.add((String) uploadResult.get("secure_url"));
-        }
+        Set<String> uploadedImagesUrls = super.uploadToCloudinary(request);
 
 
         if (bindingModel.getPrice() < 0)
@@ -121,6 +107,6 @@ public class ProductController extends BaseController {
 
         this.productService.delete(id);
 
-        return super.redirect("/");
+        return super.view("index");
     }
 }

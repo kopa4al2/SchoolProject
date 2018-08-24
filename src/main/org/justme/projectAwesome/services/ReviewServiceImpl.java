@@ -5,7 +5,6 @@ import justme.projectAwesome.entities.Review;
 import justme.projectAwesome.models.binding.ReviewBindingModel;
 import justme.projectAwesome.repositories.CommentRepository;
 import justme.projectAwesome.repositories.ReviewRepository;
-import justme.projectAwesome.services.interfaces.CommentService;
 import justme.projectAwesome.services.interfaces.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +64,12 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review findById(String id) {
         return this.reviewRepository.findById(id).get();
+    }
+
+    @Override
+    public Page<Review> findAllByTitleContaining(String title, Pageable pageable) {
+
+        return this.reviewRepository.findAllByTitleContaining(title, pageable);
     }
 
 }

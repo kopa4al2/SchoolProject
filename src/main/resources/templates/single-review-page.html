@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+
+<body th:with="entity = ${review}, entityName=${'reviews'}">
+<th:block th:replace="fragments/modals/authentication-modals"></th:block>
+<th:block th:replace="fragments/navs/nav"></th:block>
+<th:block th:replace="fragments/modals/confirmation-modal"></th:block>
+<th:block th:replace="fragments/success-message"></th:block>
+<!--TODO: FIX THIS TO BE REUSABLE-->
+<th:block th:replace="fragments/modals/comment-form-modal"></th:block>
+<div class="main-container">
+    <div class="container">
+        <div sec:authorize="isAuthenticated()"
+             th:if="${#authentication.getPrincipal().getId() == review.getWriter().getId()
+                     || #authentication.getPrincipal().isAdmin()}"
+             class="float-right">
+            <button class="btn btn-warning">Edit</button>
+            <button class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#confirm-modal"
+                    data-message="The product and all of its comments will be deleted permanently"
+                    th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}">Delete
+            </button>
+        </div>
+        <div class="single-product-container">
+            <h2 class="text-center text-capitalize" th:text="${review.getTitle()}"></h2>
+            <h3 class="small text-center">
+                <span th:text="'Posted by: '"></span>
+                <span><a th:href="@{|/users/userid=${review.getWriter().getId()}|}"
+                         th:text="${review.getWriter().getUsername()}"></a>
+                    </span>
+                <span class="ml-2"
+                      th:text="'Uploaded on: ' + ${#dates.format(review.getCreatedOn(), 'dd-MMM-yyyy  HH:mm')}"></span>
+            </h3>
+            <div class="product-description">
+                <section class="px-4 description-section">
+                    <p th:text="${review.getContent()}"></p>
+                </section>
+            </div>
+
+        </div>
+        <button sec:authorize="isAuthenticated()" class="btn btn-outline-success mt-4" data-target="#modal-comment-box" data-toggle="modal">Add a comment
+        </button>
+        <section th:each="comment : ${review.getComments()} " class="comments-section">
+            <th:block th:replace="fragments/comments-section(comment)"></th:block>
+        </section>
+    </div>
+</div>
+</body>
+</html>

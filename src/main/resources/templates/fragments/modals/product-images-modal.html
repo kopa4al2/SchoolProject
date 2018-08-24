@@ -1,0 +1,38 @@
+<div class="modal" tabindex="-1" role="dialog" id="product-images">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="product-images-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <th:block th:each="img, iter : ${product.getImgsUrl()}">
+                            <li data-target="#product-images-carousel"
+                                th:data-slide-to="${iter.index}"
+                                th:classappend="${iter.index == 0} ? active : ' '"
+                            ></li>
+                        </th:block>
+                    </ol>
+                    <div class="carousel-inner">
+                            <th:block th:each="img, iter : ${product.getImgsUrl()}">
+                                <div class="carousel-item"
+                                     th:classappend="${iter.index == 0} ? 'active' : ''">
+                                    <a th:href="${img}" target="_blank">
+                                    <img class="thumb-image" th:src="${img}" th:alt="'slide' + ${iter}">
+                                    </a>
+                                </div>
+                            </th:block>
+                    </div>
+                    <a class="carousel-control-prev" href="#product-images-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#product-images-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

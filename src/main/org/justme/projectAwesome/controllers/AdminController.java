@@ -1,7 +1,6 @@
 package justme.projectAwesome.controllers;
 
 import justme.projectAwesome.entities.User;
-import justme.projectAwesome.exceptions.NotFoundException;
 import justme.projectAwesome.services.interfaces.UserService;
 import justme.projectAwesome.utils.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class AdminController extends BaseController {
     public ModelAndView changeUserStatus(@PathVariable String id,
                                          @RequestParam(required = false) String promote,
                                          @RequestParam(required = false) String demote) {
-        checkIfUserIsPresent(id);
+
         if (promote != null)
             this.userService.promote(id);
         else if (demote != null)
@@ -50,8 +49,4 @@ public class AdminController extends BaseController {
         return this.redirect("/admin");
     }
 
-    private void checkIfUserIsPresent(String id) {
-        if (!this.userService.findById(id).isPresent())
-            throw new NotFoundException("No such user");
-    }
 }

@@ -1,8 +1,10 @@
 package justme.projectAwesome.controllers;
 
 import justme.projectAwesome.entities.Product;
+import justme.projectAwesome.entities.Review;
 import justme.projectAwesome.entities.User;
 import justme.projectAwesome.services.interfaces.ProductService;
+import justme.projectAwesome.services.interfaces.ReviewService;
 import justme.projectAwesome.services.interfaces.UserService;
 import justme.projectAwesome.utils.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,15 @@ public class SearchController extends BaseController {
 
     private ProductService productService;
     private UserService userService;
+    private ReviewService reviewService;
 
     @Autowired
     public SearchController(ProductService productService,
-                            UserService userService) {
+                            UserService userService,
+                            ReviewService reviewService) {
         this.productService = productService;
         this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping(value = "/admin/search/")
@@ -41,6 +46,16 @@ public class SearchController extends BaseController {
                     "/admin/search/?username=" + email);
         return this.view("admin-page::all-users-table", "pages", wrapper);
     }
+
+    @GetMapping(value = "/reviews/search/")
+    public ModelAndView filterReviews(Pageable pageable,
+                                    @RequestParam String title) {
+        PageWrapper<Review> wrapper = new PageWrapper<>(
+                this.reviewService.findAllByTitleContaining(title, pageable),
+                "/reviews/search/?title=" + title);
+        return this.view("reviews-page::all-reviews-fragment", "reviewsPages", wrapper);
+    }
+
 
     @GetMapping(value = "/sales/get-all/search/")
     public ModelAndView filterProductsByTitle(@RequestParam String title, Pageable pageable) {

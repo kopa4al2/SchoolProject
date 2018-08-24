@@ -1,0 +1,24 @@
+<!--Success Message Script-->
+<th:block th:if="not ${#strings.isEmpty(#httpServletRequest.getParameter('success'))}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let successMessage = /*[[${#httpServletRequest.getParameter('success')}]]*/ '';
+
+        let successBox = $('<div>');
+        $(successBox).appendTo($('body'));
+        $(successBox).text(successMessage);
+        $(successBox).addClass('success-message');
+        $(successBox).animate({top : "+=50"}, 1000);
+        $(successBox).on('click', () => {$(successBox).fadeOut()})
+        $('<div>').appendTo($(successBox));
+
+        setTimeout(() => {
+            $('.success-message').animate({top:"-=50"}, 1000, () => {
+                $('.success-message').remove();
+            })
+        }, 3000);
+
+        /*]]>*/
+    </script>
+</th:block>

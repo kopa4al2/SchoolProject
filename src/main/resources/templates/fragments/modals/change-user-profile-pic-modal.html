@@ -1,0 +1,16 @@
+<div class="modal fade" id="change-user-pic-modal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <form enctype="multipart/form-data" th:action="@{|/users/edit/userid=${user.getId()}|}" id="upload-user-profile-pic-dropzone" class="dropzone">
+                    <input type="text" name="success-message-identifier" hidden value="user-image-edit">
+                </form>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger pull-left" data-dismiss="modal">Cancel</button>
+                    <a id="submit-user-pic" class="btn btn-outline-success btn-ok">Submit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

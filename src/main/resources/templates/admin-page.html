@@ -7,9 +7,9 @@
 </head>
 
 <body>
-<th:block th:replace="fragments/nav
+<th:block th:replace="fragments/navs/nav
 "></th:block>
-<th:block th:replace="fragments/confirmation-modal"></th:block>
+<th:block th:replace="fragments/modals/confirmation-modal"></th:block>
 <div class="main-container">
     <section class="search-section">
         <input class="w-50" id="search-admin" onkeyup="filterUsers()" type="search" placeholder="Filter results by"/>
@@ -19,7 +19,8 @@
         </select>
         <button class="btn btn-primary">Advanced search</button>
     </section>
-    <div th:with="users=${pages.getContent()}" th:fragment="all-users-table" id="all-users-table">
+    <div th:with="users=${pages.getContent()}" th:fragment="all-users-table"
+         id="all-users-table">
         <div>
             <h2>All users</h2>
             <table class="table table-responsive">
@@ -33,7 +34,7 @@
                 </tr>
                 <tr th:each="user,iterationStatus : ${users}" th:unless="${#authentication.getPrincipal().getId() == user.getId()}"
 
-                    th:classappend="${user.isAdmin()} ? 'table-danger' :
+                    th:classappend="${user.isAdmin()} ? (${user.isOwner()} ? 'table-primary' : 'table-danger') :
                  (${user.isModerator()} ? 'table-warning' : '')">
 
                     <td th:text="${iterationStatus.count + (pages.size * (pages.number-1))}">No.</td>

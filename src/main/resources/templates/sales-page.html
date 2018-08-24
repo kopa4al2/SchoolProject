@@ -6,22 +6,22 @@
 <!--/*@thymesVar id="product" type="justme.projectAwesome.entities.Product"*/-->
 <head>
     <th:block th:replace="fragments/head"></th:block>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
-<th:block th:replace="fragments/nav"></th:block>
+<th:block th:replace="fragments/navs/nav"></th:block>
+<th:block th:replace="fragments/success-message"></th:block>
 <div class="main-container">
-    <th:block th:replace="fragments/authentication-modals"></th:block>
+    <th:block th:replace="fragments/modals/authentication-modals"></th:block>
 
     <section class="search-section">
-    <input onkeyup="filterProducts()" id="search-products-input" class="form-control mr-sm-2" type="search" placeholder="Filter by title" aria-label="Search">
+    <input onkeyup="filterProducts()" id="search-products-input" class="search-box form-control mr-sm-2" type="search" placeholder="Filter by title" aria-label="Search">
     <button id="filter" class="btn btn-primary float-left" data-toggle="modal"
             data-target="#search-modal">Advanced Search</button>
     </section>
     <div class="sales-container">
         <section class="sales-nav">
-            <th:block th:replace="fragments/sales-nav"></th:block>
+            <th:block sec:authorize="isAuthenticated()" th:replace="fragments/navs/sales-nav"></th:block>
         </section>
         <section class="sales-render-section">
             <div id="product-container" class="products-container">

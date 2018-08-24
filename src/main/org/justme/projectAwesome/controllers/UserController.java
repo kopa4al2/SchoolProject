@@ -7,11 +7,17 @@ import justme.projectAwesome.models.binding.UserRegisterBindingModel;
 import justme.projectAwesome.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class UserController extends BaseController {
@@ -29,7 +35,11 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@ModelAttribute UserRegisterBindingModel bindingModel) {
+    public ModelAndView register(@Valid @ModelAttribute UserRegisterBindingModel bindingModel,
+                                 BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+           return this.view("errors/error", "bindingResult", bindingResult);
+        }
         if (bindingModel.getPassword().equals(
                 bindingModel.getConfirmPassword())) {
             this.userService.createUser(bindingModel);
@@ -50,10 +60,19 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/users/edit/userid={userId}")
-    public ModelAndView editUser(@PathVariable String id,
-                                 @RequestParam(name = "profile-pic") MultipartFile image) {
-//        this.userService.findById(id).get().setProfilePictureUrl();
-        System.out.println("da");
-        return this.view("/users/userid=" + id);
+    public ModelAndView editUser(@PathVariable String userId,
+                                 MultipartHttpServletRequest image) throws Exception {
+
+        if(image.getFileMap().size() > 1) {
+            throw new Exception("Upload only one photo");
+        }
+        Set<String> profileImg = super.uploadToCloudinary(image);
+        String url = (String) profileImg.stream().toArray()[0];
+        User u = this.userService.findById(userId).get();
+        u.setProfilePictureUrl(url);
+        this.userService.update(u);
+
+
+        return this.view("single-user-page", "user", u);
     }
 }
