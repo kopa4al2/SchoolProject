@@ -50,8 +50,9 @@ public class ReviewController extends BaseController{
 //        if(!this.reviewService.exists(id))
 //            throw new NotFoundException("There is no such review");
 //        this.reviewService.deleteReview(id);
-        System.out.println("minah");
-        return super.redirect("/reviews", "redirectUrl", "/reviews");
+
+        return super.view("reviews-page");
+//        return super.redirect("/reviews", "redirectUrl", "/reviews");
     }
 
     @GetMapping("reviews/reviewId={reviewId}")

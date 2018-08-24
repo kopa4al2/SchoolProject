@@ -14,12 +14,17 @@ public class SuccessMessageInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+        String requestedWith = request.getHeader("X-Requested-With");
+        Boolean isAjax = requestedWith != null ? "XMLHttpRequest".equals(requestedWith) : false;
+
+
         String messageIdentifier = request.getParameter("success-message-identifier");
 
         if (messageIdentifier != null) {
             String successMessage = SuccessMessageMap.get(messageIdentifier);
             request.setAttribute("success", successMessage);
-        } else if(request.getMethod().equals("POST")) {
+        } else if(request.getMethod().equals("POST") && isAjax) {
             BufferedReader r = request.getReader();
             String line;
             String content = "";
@@ -28,7 +33,12 @@ public class SuccessMessageInterceptor extends HandlerInterceptorAdapter {
             }
             String[] tokens = content.split("success-message-identifier\"");
             messageIdentifier = tokens[1].substring(0, tokens[1].indexOf("--"));
-            request.setAttribute("success", SuccessMessageMap.get(messageIdentifier));
+
+            response.setHeader("success", SuccessMessageMap.get(messageIdentifier));
+            response.setHeader("redirect-url", request.getRequestURI());
+
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
         }
 
 

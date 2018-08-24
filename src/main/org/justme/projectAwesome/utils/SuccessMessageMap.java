@@ -11,11 +11,13 @@ public abstract class SuccessMessageMap {
     static {
         successMessageMap.put("user-image-edit",SuccessMessages.SUCCESSFULLY_EDITED_USER_PIC);
         successMessageMap.put("add-comment",SuccessMessages.ADDED_COMMENT);
-//        successMessageMap.put("remove-comment",SuccessMessages.REMOVED_COMMENT);
-//        successMessageMap.put("add-review",SuccessMessages.ADDED_REVIEW);
-//        successMessageMap.put("remove-review",SuccessMessages.REMOVED_REVIEW);
-//        successMessageMap.put("add-product", SuccessMessages.ADD_PRODUCT);
+        successMessageMap.put("remove-comment",SuccessMessages.REMOVED_COMMENT);
+        successMessageMap.put("add-review",SuccessMessages.ADDED_REVIEW);
+        successMessageMap.put("remove-review",SuccessMessages.REMOVED_REVIEW);
+        successMessageMap.put("add-product", SuccessMessages.ADD_PRODUCT);
         successMessageMap.put("remove-product", SuccessMessages.REMOVE_PRODUCT);
+        successMessageMap.put("add-category", SuccessMessages.ADD_CATEGORY);
+        successMessageMap.put("remove-category", SuccessMessages.REMOVE_CATEGORY);
     }
 
     public static String get(String mapEntry) {

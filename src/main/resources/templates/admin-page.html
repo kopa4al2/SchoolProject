@@ -46,18 +46,21 @@
                         <form th:action="@{|/users/userid=${user.getId()}|}" th:method="POST">
                             <button class="btn btn-success btn-xs" th:name="promote">Promote
                             </button>
+                            <input type="text" hidden name="success-message-identifier" value="promote-user">
                         </form>
                     </td>
                     <td>
                         <form th:action="@{|/users/userid=${user.getId()}|}" th:method="POST">
                             <button class="btn btn-warning btn-xs" th:name="demote">Demote</button>
+                            <input type="text" hidden name="success-message-identifier" value="demote-user">
                         </form>
                     </td>
 
                     <td>
                         <button type="button"
-                                th:data-href="@{|/users/userid=${user.getId()}|}"
                                 data-toggle="modal"
+                                th:data-href="@{|/users/userid=${user.getId()}|}"
+                                data-on-success="user-delete"
                                 data-message="All products, reviews and comments from the user will be deleted as well"
                                 data-target="#confirm-modal"
                                 class="btn btn-danger btn-xs" th:name="delete">Delete

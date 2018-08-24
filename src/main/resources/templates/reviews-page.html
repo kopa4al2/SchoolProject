@@ -16,7 +16,11 @@
     <th:block th:replace="fragments/modals/authentication-modals"></th:block>
     <th:block th:replace="fragments/modals/confirmation-modal"></th:block>
     <th:block th:replace="fragments/modals/write-review-modal"></th:block>
-    <button sec:authorize="isAuthenticated()" class="mx-auto mb-3 w-50 btn btn-outline-primary" data-toggle="modal" data-target="#write-review-modal">Write a review</button>
+    <button sec:authorize="isAuthenticated()" class="mx-auto mb-3 w-50 btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#write-review-modal"
+            data-on-success="add-review"
+    >Write a review</button>
     <section class="search-section">
         <input id="search-review" onkeyup="filterReviews()" class="search-box form-control mr-sm-2" type="search" placeholder="Filter by title" aria-label="Search">
         <button id="filter" class="btn btn-primary float-left" data-toggle="modal"
@@ -53,8 +57,9 @@
                                      class="ml-lg-auto ml-xl-auto">
                                     <button class="btn btn-warning ">Edit</button>
                                     <button class="btn btn-danger"
-                                            th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}"
                                             data-toggle="modal"
+                                            th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}"
+                                            data-on-success="add-comment"
                                             data-message="The review and all of its comments will be deleted"
                                             data-target="#confirm-modal">Delete</button>
                                 </div>

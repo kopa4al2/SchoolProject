@@ -1,0 +1,12 @@
+<!--Success Message Script-->
+<th:block th:if="not ${#strings.isEmpty(#httpServletRequest.getParameter('error'))}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let errorMessage = /*[[${#httpServletRequest.getParameter('error')}]]*/ '';
+        appendErrorBox(errorMessage);
+
+
+        /*]]>*/
+    </script>
+</th:block>

@@ -25,7 +25,9 @@
                     data-toggle="modal"
                     data-target="#confirm-modal"
                     data-message="The product and all of its comments will be deleted permanently"
-                    th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}">Delete
+                    data-on-success="delete-review"
+                    th:data-href="@{|/reviews/delete/reviewId=${review.getId()}|}"
+            >Delete
             </button>
         </div>
         <div class="single-product-container">
@@ -45,7 +47,11 @@
             </div>
 
         </div>
-        <button sec:authorize="isAuthenticated()" class="btn btn-outline-success mt-4" data-target="#modal-comment-box" data-toggle="modal">Add a comment
+        <button sec:authorize="isAuthenticated()"
+                class="btn btn-outline-success mt-4"
+                data-target="#modal-comment-box"
+                data-on-success="add-comment"
+                data-toggle="modal">Add a comment
         </button>
         <section th:each="comment : ${review.getComments()} " class="comments-section">
             <th:block th:replace="fragments/comments-section(comment)"></th:block>

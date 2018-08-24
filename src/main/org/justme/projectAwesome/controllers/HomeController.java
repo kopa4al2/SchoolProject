@@ -9,6 +9,7 @@ public class HomeController extends BaseController{
 
     @GetMapping("/")
     public ModelAndView home() {
+
         return this.view("index");
     }
 }

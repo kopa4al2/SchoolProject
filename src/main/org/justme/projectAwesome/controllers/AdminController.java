@@ -1,5 +1,6 @@
 package justme.projectAwesome.controllers;
 
+import justme.projectAwesome.annotations.ExceptionView;
 import justme.projectAwesome.entities.User;
 import justme.projectAwesome.services.interfaces.UserService;
 import justme.projectAwesome.utils.PageWrapper;
@@ -25,6 +26,7 @@ public class AdminController extends BaseController {
     }
 
     @GetMapping("/admin")
+    @ExceptionView("/admin")
     public ModelAndView getAdminPanel(@PageableDefault(size=20) Pageable pageable) {
 
         PageWrapper<User> usersPages =
@@ -35,9 +37,10 @@ public class AdminController extends BaseController {
     }
 
     @PostMapping(value = "/users/userid={id}")
+    @ExceptionView("/admin")
     public ModelAndView changeUserStatus(@PathVariable String id,
                                          @RequestParam(required = false) String promote,
-                                         @RequestParam(required = false) String demote) {
+                                         @RequestParam(required = false) String demote) throws Exception {
 
         if (promote != null)
             this.userService.promote(id);
@@ -46,6 +49,7 @@ public class AdminController extends BaseController {
         //If it is not promote or demote, its for sure delete
         else
             this.userService.delete(id);
+
         return this.redirect("/admin");
     }
 
