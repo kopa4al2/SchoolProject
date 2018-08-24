@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Vollkorn');
 @font-face {
     font-family: "FontAwesome";
     font-weight: normal;
@@ -10,13 +11,33 @@
     url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
 }
 body{
-    background: linear-gradient(to right , #11998e, #38ef7d);
+
+    /*background: linear-gradient(to right , #11998e, #38ef7d);*/
+
+    color: #393433;
+    font-family: 'Lato', sans-serif;
+
+    background-color:silver;
+    background-image:
+            radial-gradient(circle at 100% 150%, silver 24%, white 25%, white 28%, silver 29%, silver 36%, white 36%, white 40%, transparent 40%, transparent),
+            radial-gradient(circle at 0    150%, silver 24%, white 25%, white 28%, silver 29%, silver 36%, white 36%, white 40%, transparent 40%, transparent),
+            radial-gradient(circle at 50%  100%, white 10%, silver 11%, silver 23%, white 24%, white 30%, silver 31%, silver 43%, white 44%, white 50%, silver 51%, silver 63%, white 64%, white 71%, transparent 71%, transparent),
+            radial-gradient(circle at 100% 50%, white 5%, silver 6%, silver 15%, white 16%, white 20%, silver 21%, silver 30%, white 31%, white 35%, silver 36%, silver 45%, white 46%, white 49%, transparent 50%, transparent),
+            radial-gradient(circle at 0    50%, white 5%, silver 6%, silver 15%, white 16%, white 20%, silver 21%, silver 30%, white 31%, white 35%, silver 36%, silver 45%, white 46%, white 49%, transparent 50%, transparent);
+    background-size:100px 50px;
+
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Vollkorn', serif;
+
 }
 
 a{
     text-decoration: none;
 }
 .main-container{
+
+
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 100px);
@@ -53,5 +74,137 @@ a{
 }
 .bs-searchbox > input{
     padding-left:25px;
+}
+.animated-box {
+    z-index:100;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: -50px;
+    width: 100%;
+    height: auto;
+    opacity:0.9;
+    font-style: italic;
+    font-family: 'Vollkorn', serif;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.animated-box:hover{
+    cursor:pointer;
+}
+.animated-box div {
+    position: absolute;
+    left: -46px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+
+    -webkit-animation-name: MOVE-BG;
+    -webkit-animation-duration: 1.2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    animation-name: MOVE-BG;
+    animation-duration: 1.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.success-message div{
+    background:-webkit-repeating-linear-gradient(312deg, rgb(18, 209, 132) 10%, rgb(62, 255, 150) 15%);
+    background:-o-repeating-linear-gradient(312deg, rgb(18, 209, 132) 10%, rgb(62, 255, 150) 15%);
+    background:-moz-repeating-linear-gradient(312deg, rgb(18, 209, 132) 10%, rgb(62, 255, 150) 15%);
+    /*background:repeating-linear-gradient(312deg, rgb(18, 209, 132) 10%, rgb(62, 255, 150) 15%);*/
+    background: repeating-linear-gradient(
+            -55deg,
+            rgb(62, 255, 150) 1px,
+            rgb(18, 209, 132) 2px,
+            rgb(18, 209, 132) 11px,
+            rgb(62, 255, 150) 12px,
+            rgb(62, 255, 150) 20px
+    );
+}
+.error-message div{
+    background: repeating-linear-gradient(
+            -55deg,
+            #fa4000 1px,
+            #cd0000 2px,
+            #cd0000  11px,
+            #fa4000 12px,
+            #fa4000 20px
+    );
+}
+
+@-webkit-keyframes MOVE-BG {
+    from {
+        -webkit-transform: translateX(0);
+    }
+    to {
+        -webkit-transform: translateX(46px);
+    }
+}
+
+@keyframes MOVE-BG {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(46px);
+    }
+}
+
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #FFF;
+    background-image: -webkit-gradient(linear,
+    40% 0%,
+    75% 84%,
+    from(#4D9C41),
+    to(#19911D),
+    color-stop(.6,#54DE5D))
+}
+
+/*
+ *  STYLE 16
+ */
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #FFF;
+    background-image: -webkit-linear-gradient(top,
+    #32fcd4 0%,
+    #3df97c 50%,
+    #3df97c 100%);
 }
 

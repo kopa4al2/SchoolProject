@@ -14,9 +14,9 @@
     margin-top:10px;
 }
 #img-section{
-    width:200px;
+    width:150px;
     position: relative;
-    /*width: 50%;*/
+
 }
 /*HOVER EFFECT*/
 .user-img-lg{
@@ -29,6 +29,9 @@
     display: block;
     transition: .5s ease;
     backface-visibility: hidden;
+}
+#toggle-user-pic-btn:hover{
+    cursor:pointer;
 }
 .pic-hover{
     transition: .5s ease;
@@ -46,6 +49,17 @@
 
 #img-section:hover .pic-hover {
     opacity: 1;
+}
+#toggle-user-pic-btn{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    opacity:0;
 }
 /*END HOVER*/
 #info-section{
@@ -74,4 +88,16 @@
 .user-navbar-container a:hover{
     background-color:#CCC;
     border-radius:10px;
+}
+
+/*edit user style*/
+#upload-user-profile-pic-dropzone{
+    width:50%;
+    margin:auto;
+}
+
+
+/*user info style*/
+.users-info-render-container{
+    margin-top:10px;
 }
